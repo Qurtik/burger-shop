@@ -13,3 +13,8 @@
   text-align: center;
   list-style-type: none;
 }
+
+
+.ingredient_widgets{
+	overflow: auto;
+}
