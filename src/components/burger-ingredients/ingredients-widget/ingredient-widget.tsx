@@ -1,37 +1,39 @@
-import React from "react"
-import { TIngredient } from "@/utils/types";
-import IngredientItem from "./ingredients-item/ingredient-item";
+import React from 'react';
 
-import style from './ingredient-widget.module.css'
+import IngredientItem from './ingredients-item/ingredient-item';
 
-type TItemBlock  = {
-	ingredientWidgetTitle: string,
-	itemType: "bun" | "main" | "sauce"
-} & {ingredients: TIngredient[];}
+import type { TIngredient } from '@/utils/types';
 
-const IngredientWidget = ({ingredients, ingredientWidgetTitle, itemType}: TItemBlock): React.JSX.Element=>{
-	console.log("ItemBlock - render")
+import style from './ingredient-widget.module.css';
 
-	const items = ingredients.filter(bun => bun.type.toLowerCase() === itemType);
+type TItemBlock = {
+  ingredientWidgetTitle: string;
+  itemType: 'bun' | 'main' | 'sauce';
+} & { ingredients: TIngredient[] };
 
-	return (
-		<div className="pt-10">
-			<p className={`text text_type_main-medium pb-6`}>
-				{ingredientWidgetTitle}
-			</p>
-			<div className={`${style.widgetItems} pl-4`}>
-				{
-					items.map(item => {
-						return (
-							<React.Fragment key={item._id}>
-								<IngredientItem {...item} />
-							</React.Fragment>
-						)
-					})
-				}
-			</div>
-		</div>
-	)
-}
+const IngredientWidget = ({
+  ingredients,
+  ingredientWidgetTitle,
+  itemType,
+}: TItemBlock): React.JSX.Element => {
+  console.log('ItemBlock - render');
 
-export default IngredientWidget
+  const items = ingredients.filter((bun) => bun.type.toLowerCase() === itemType);
+
+  return (
+    <div className="pt-10">
+      <p className={`text text_type_main-medium pb-6`}>{ingredientWidgetTitle}</p>
+      <div className={`${style.widgetItems} pl-4`}>
+        {items.map((item) => {
+          return (
+            <React.Fragment key={item._id}>
+              <IngredientItem {...item} />
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default IngredientWidget;

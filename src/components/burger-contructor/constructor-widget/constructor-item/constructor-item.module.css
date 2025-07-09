@@ -1,39 +1,9 @@
-.card {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	height: 85px;
-	background-color: rgb(66 60 60);
-	border-radius: 12px;
-	cursor: pointer;
+.constructor_element_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card:hover{
-	box-shadow: 0 0 3px 3px purple;
-	transform: scale(1.05);
-	transition: transform .1s ease-in-out;
-}
-
-.card_body {
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	box-sizing: border-box;
-	width: 100%;
-	padding: 16px 24px;
-}
-
-.card_image{
-	width: 95px;
-	height: 55px;
-}
-
-.card_item_name{
-	width: 100%;
-}
-
-.card_price{
-	display: flex;
-	justify-content: flex-end;
-	gap: 5px;
+.grag_icon {
+  cursor: grab;
 }

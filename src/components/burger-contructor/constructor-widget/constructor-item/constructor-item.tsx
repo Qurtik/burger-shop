@@ -1,30 +1,27 @@
-import { TIngredient } from "@/utils/types"
-import { CurrencyIcon, DragIcon, LockIcon } from "@krgaa/react-developer-burger-ui-components"
+import {
+  ConstructorElement,
+  DragIcon,
+} from '@krgaa/react-developer-burger-ui-components';
 
-import styles from "./constructor-item.module.css"
+import type { TIngredient } from '@/utils/types';
 
-const ContructorItem = (props: TIngredient) => {
-	return (
-		<div className={styles.card}>
-			<div>
-			<DragIcon type="primary" />
-			</div>
-			<div className={styles.card_body}>
-				<img className={styles.card_image} alt="Изображение компонента" src={props.image} />
-				<span className={styles.card_item_name}>{props.name}</span>
-				<div className={styles.card_price}>
-					<span className="text text_type_digits-default">
-						{props.price}
-					</span>
-					<CurrencyIcon type="primary" />
-				</div>
+import styles from './constructor-item.module.css';
 
-				<span>
-					<LockIcon type="primary" />
-				</span>
-			</div>
-		</div>
-	)
-}
+type TProps = {
+  ingredient: TIngredient;
+};
 
-export default ContructorItem
+const ContructorItem = ({ ingredient }: TProps): React.JSX.Element => {
+  return (
+    <div className={styles.constructor_element_card}>
+      <DragIcon type="primary" className={styles.grag_icon} />
+      <ConstructorElement
+        text={ingredient.name}
+        price={ingredient.price}
+        thumbnail={ingredient.image}
+      />
+    </div>
+  );
+};
+
+export default ContructorItem;
