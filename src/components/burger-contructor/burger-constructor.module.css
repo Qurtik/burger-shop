@@ -1,9 +1,9 @@
-.burger_constructor_page{
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 600px;
-	color: var(--text-primary-color);
+.burger_constructor_page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  color: var(--text-primary-color);
 }
 
 .burger_constructor_widgets {
@@ -11,14 +11,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70%;
+  height: 80%;
   padding-bottom: 20px;
-  overflow: auto;
+
+  /* overflow: auto; */
 }
 
-.burger_constructor_footer{
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 40px;
+.burger_constructor_footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
 }

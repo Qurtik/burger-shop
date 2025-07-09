@@ -1,6 +1,7 @@
-import type { Config } from 'prettier';
+// import type { Config } from 'prettier';
 
-const config: Config = {
+// const config: Config = {
+	const config = {
   endOfLine: 'lf',
   jsxSingleQuote: false,
   printWidth: 89,
