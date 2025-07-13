@@ -1,0 +1,16 @@
+.title {
+  justify-self: flex-start;
+}
+
+.footer {
+  display: flex;
+  gap: 5px;
+}
+
+.footer_item {
+  display: flex;
+  flex-direction: column;
+  place-items: center center;
+  gap: 8px;
+  padding: 15px;
+}

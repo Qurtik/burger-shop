@@ -1,6 +1,8 @@
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
+import React from 'react';
 
 import ContructorWidget from './constructor-widget/constructor-widget';
+import OrderDetails from './order-details/order-details';
 
 import type { TIngredient } from '@utils/types';
 
@@ -13,7 +15,11 @@ type TBurgerConstructorProps = {
 export const BurgerConstructor = ({
   ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
-  console.log(ingredients);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleOpenModal = (): void => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`${styles.burger_constructor_page}  pt-25`}>
@@ -25,10 +31,12 @@ export const BurgerConstructor = ({
         <span className="text text_type_digits-medium">
           0 <CurrencyIcon type="primary" />
         </span>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button htmlType="button" type="primary" size="medium" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>
+
+      <OrderDetails isOpen={isOpen} onClose={() => setIsOpen(false)} orderNum={123456} />
     </div>
   );
 };

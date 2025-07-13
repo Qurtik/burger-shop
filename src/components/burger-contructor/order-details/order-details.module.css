@@ -1,0 +1,17 @@
+.modal_check_mark {
+  width: 25px;
+  height: 25px;
+  margin: 25px;
+  padding: 25px;
+  background-color: rgb(89 2 92 / 44.5%);
+  clip-path: polygon(
+    30% 0%,
+    70% 0%,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0% 70%,
+    0% 30%
+  );
+}
