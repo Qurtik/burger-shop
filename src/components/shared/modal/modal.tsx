@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
+import { CloseIcon } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,45 +11,37 @@ import './modal.css';
 const modalRoot = document.getElementById('react-modals')!;
 
 type TProps = {
-  children?: React.JSX.Element | React.JSX.Element[];
-  isOpen: boolean;
-  header?: string;
+  children?: string | React.JSX.Element | React.JSX.Element[];
+  title?: string;
   onClose?: () => void;
 };
 
-const Modal = ({ isOpen, onClose, children }: TProps): React.JSX.Element | null => {
-  // Обработка нажатия Esc
-
+const Modal = ({ onClose, children, title }: TProps): React.JSX.Element | null => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') {
         if (typeof onClose === 'function') onClose();
       }
     };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden'; // Блокировка скролла
-    }
+    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = 'hidden'; // Блокировка скролла
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
-  if (!isOpen) return null;
-
-  // Создание портала в элемент #modal-root
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className="modal-content text text_type_main-default"
+        className="p-10 modal-content text text_type_main-default"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close" onClick={onClose}>
-          &times;
-        </button>
+        <div className="modal-title">
+          <h2 className=" text text_type_medium">{title}</h2>
+          <CloseIcon type="primary" className="modal-close" onClick={onClose} />
+        </div>
         {children}
       </div>
     </div>,

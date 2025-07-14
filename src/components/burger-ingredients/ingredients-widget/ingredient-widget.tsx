@@ -27,7 +27,7 @@ const IngredientWidget = ({
         {items.map((item) => {
           return (
             <React.Fragment key={item._id}>
-              <IngredientItem {...item} />
+              <IngredientItem item={item} />
             </React.Fragment>
           );
         })}

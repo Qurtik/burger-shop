@@ -1,8 +1,15 @@
-.modal_check_mark {
-  width: 25px;
-  height: 25px;
-  margin: 25px;
-  padding: 25px;
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 0 48px;
+}
+
+.check_mark {
+  width: 45px;
+  height: 45px;
+  padding: 35px;
   background-color: rgb(89 2 92 / 44.5%);
   clip-path: polygon(
     30% 0%,

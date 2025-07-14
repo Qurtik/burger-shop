@@ -20,7 +20,7 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
         extraClass="mb-6"
         type="top"
         isLocked={true}
-        text={buns.name}
+        text={`${buns.name} (верх)`}
         price={buns.price}
         thumbnail={buns.image}
       />
@@ -33,7 +33,7 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
         extraClass="mt-6"
         type="bottom"
         isLocked={true}
-        text={buns.name}
+        text={`${buns.name} (низ)`}
         price={buns.price}
         thumbnail={buns.image}
       />
