@@ -1,25 +1,15 @@
 .widget {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  /* width: 90%; */
-
-  /* height: 90%; */
-  height: 100%;
-
-  /* overflow: auto; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
 }
 
 .widgetItems {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow: auto;
-
-  /* width: 90%; */
-
-  /* height: 60vh; */
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	overflow: auto;
 }

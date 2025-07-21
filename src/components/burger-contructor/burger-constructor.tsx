@@ -11,42 +11,42 @@ import type React from 'react';
 import styles from './burger-constructor.module.css';
 
 type TBurgerConstructorProps = {
-  ingredients: TIngredient[];
+	ingredients: TIngredient[];
 };
 
 export const BurgerConstructor = ({
-  ingredients,
+	ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
-  const [isOpen, setIsOpen, setIsClose] = useModal();
+	const [isOpen, setIsOpen, setIsClose] = useModal();
 
-  const handleOpen = (): void => {
-    setIsOpen();
-  };
+	const handleOpen = (): void => {
+		setIsOpen();
+	};
 
-  const handleClose = (): void => {
-    setIsClose();
-  };
+	const handleClose = (): void => {
+		setIsClose();
+	};
 
-  return (
-    <div className={`${styles.burger_constructor_page}  pt-25`}>
-      <section className={`${styles.burger_constructor_widgets}`}>
-        <ContructorWidget ingredients={ingredients} />
-      </section>
+	return (
+		<div className={`${styles.burger_constructor_page}  pt-25`}>
+			<section className={`${styles.burger_constructor_widgets}`}>
+				<ContructorWidget ingredients={ingredients} />
+			</section>
 
-      <div className={`${styles.burger_constructor_footer} pt-10`}>
-        <span className="text text_type_digits-medium">
-          0 <CurrencyIcon type="primary" />
-        </span>
-        <Button htmlType="button" type="primary" size="medium" onClick={handleOpen}>
-          Оформить заказ
-        </Button>
-      </div>
+			<div className={`${styles.burger_constructor_footer} pt-10`}>
+				<span className="text text_type_digits-medium">
+					0 <CurrencyIcon type="primary" />
+				</span>
+				<Button htmlType="button" type="primary" size="medium" onClick={handleOpen}>
+					Оформить заказ
+				</Button>
+			</div>
 
-      {isOpen && (
-        <Modal onClose={handleClose}>
-          <OrderDetails orderNum={123456} />
-        </Modal>
-      )}
-    </div>
-  );
+			{isOpen && (
+				<Modal onClose={handleClose}>
+					<OrderDetails orderNum={123456} />
+				</Modal>
+			)}
+		</div>
+	);
 };
