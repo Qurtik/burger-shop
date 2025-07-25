@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 0 48px;
+}
+
+.check_mark {
+  width: 45px;
+  height: 45px;
+  padding: 35px;
+  background-color: rgb(89 2 92 / 44.5%);
+  clip-path: polygon(
+    30% 0%,
+    70% 0%,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0% 70%,
+    0% 30%
+  );
+}
