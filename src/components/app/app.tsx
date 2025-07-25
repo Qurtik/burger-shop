@@ -1,5 +1,11 @@
 import { loadIngredients } from '@/services/ingredients/actions';
-import { selectIngredientsState } from '@/services/ingredients/reducers';
+import {
+	selectIngredients,
+	selectIngredientsInConstructor,
+	// selectIngredientsState,
+	selectIsError,
+	selectIsLoading,
+} from '@/services/ingredients/reducers';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +18,13 @@ import type { AppDispatch } from '@/services/store';
 import styles from './app.module.css';
 
 export const App = (): React.JSX.Element => {
-	const { data: ingredients, isLoading, isError } = useSelector(selectIngredientsState);
+	// const { ingredients, isLoading, isError } = useSelector(selectIngredientsState);
+	// FIXME: Почему происходит перерсовка элементов компонента?
+	const ingredients = useSelector(selectIngredients);
+	const isLoading = useSelector(selectIsLoading);
+	const isError = useSelector(selectIsError);
+
+	const ingredientsInContructor = useSelector(selectIngredientsInConstructor);
 
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -36,8 +48,9 @@ export const App = (): React.JSX.Element => {
 						<p>Нет доступных ингредиентов</p>
 					) : (
 						<>
+							{JSON.stringify(selectIngredientsInConstructor)}
 							<BurgerIngredients ingredients={ingredients} />
-							<BurgerConstructor ingredients={ingredients} />
+							<BurgerConstructor ingredients={ingredientsInContructor} />
 						</>
 					)}
 				</main>

@@ -13,3 +13,11 @@
 	gap: 16px;
 	overflow: auto;
 }
+
+.hover_area_buns {
+	box-shadow: 0 0 3px 3px purple;
+}
+
+.hover_area_ingredients {
+	box-shadow: 0 0 3px 3px purple;
+}

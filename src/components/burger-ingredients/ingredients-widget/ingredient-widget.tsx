@@ -7,13 +7,13 @@ import type { TIngredient } from '@/utils/types';
 import style from './ingredient-widget.module.css';
 
 type TItemBlock = {
-	ingredientWidgetTitle: string;
+	// ingredientWidgetTitle: string;
 	itemType: 'bun' | 'main' | 'sauce';
 } & { ingredients: TIngredient[] };
 
 const IngredientWidget = ({
 	ingredients,
-	ingredientWidgetTitle,
+	// ingredientWidgetTitle,
 	itemType,
 }: TItemBlock): React.JSX.Element => {
 	console.log('ItemBlock - render');
@@ -22,7 +22,7 @@ const IngredientWidget = ({
 
 	return (
 		<div className="pt-10">
-			<p className={`text text_type_main-medium pb-6`}>{ingredientWidgetTitle}</p>
+			{/* <p className={`text text_type_main-medium pb-6`}>{ingredientWidgetTitle}</p> */}
 			<div className={`${style.widgetItems} pl-4`}>
 				{items.map((item) => {
 					return (

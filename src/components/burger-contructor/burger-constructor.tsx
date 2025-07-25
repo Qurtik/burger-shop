@@ -1,10 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
+import { clearIngredientsInConstructor, selectIngredientsInConstructor } from '@/services/ingredients/reducers';
+import { createOrder } from '@/services/order/actions';
+import { selectOrderState } from '@/services/order/reducers';
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../shared/modal/modal';
 import { useModal } from '../shared/modal/useModal';
 import ContructorWidget from './constructor-widget/constructor-widget';
 import OrderDetails from './order-details/order-details';
 
+import type { AppDispatch } from '@/services/store';
 import type { TIngredient } from '@utils/types';
 import type React from 'react';
 
@@ -18,9 +25,27 @@ export const BurgerConstructor = ({
 	ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
 	const [isOpen, setIsOpen, setIsClose] = useModal();
+	const totalOrderPrice = useSelector(selectIngredientsInConstructor).reduce((acc, item) => acc + item.price, 0);
+	const ingredientsIds = useSelector(selectIngredientsInConstructor).map(item => item._id)
+	const { order
+		// , isError
+		, isLoading
+	} = useSelector(selectOrderState)
+	const dispatch = useDispatch<AppDispatch>()
 
-	const handleOpen = (): void => {
-		setIsOpen();
+	const handleClick = (): void => {
+		void handleOpen();
+	}
+
+	const handleOpen = async (): Promise<void> => {
+		try {
+			await dispatch(createOrder(ingredientsIds)).unwrap();
+			dispatch(clearIngredientsInConstructor())
+			setIsOpen();
+		}
+		catch (error) {
+			console.error(error)
+		}
 	};
 
 	const handleClose = (): void => {
@@ -28,23 +53,23 @@ export const BurgerConstructor = ({
 	};
 
 	return (
-		<div className={`${styles.burger_constructor_page}  pt-25`}>
-			<section className={`${styles.burger_constructor_widgets}`}>
+		<div className={`${styles.burger_constructor_page} pt-25`}>
+			<section className={`${styles.burger_constructor_widgets} ${isLoading ? styles.disabled : ""}`}>
 				<ContructorWidget ingredients={ingredients} />
 			</section>
 
 			<div className={`${styles.burger_constructor_footer} pt-10`}>
 				<span className="text text_type_digits-medium">
-					0 <CurrencyIcon type="primary" />
+					{totalOrderPrice} <CurrencyIcon type="primary" />
 				</span>
-				<Button htmlType="button" type="primary" size="medium" onClick={handleOpen}>
-					Оформить заказ
+				<Button htmlType="button" type="primary" size="medium" extraClass={isLoading ? styles.gradient_animate : ""} onClick={handleClick}>
+					{isLoading ? "Оформляем..." : "Оформить заказ"}
 				</Button>
 			</div>
 
-			{isOpen && (
+			{isOpen && order && (
 				<Modal onClose={handleClose}>
-					<OrderDetails orderNum={123456} />
+					<OrderDetails orderNum={order.order.number} />
 				</Modal>
 			)}
 		</div>
