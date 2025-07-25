@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
@@ -39,7 +41,7 @@ export const BurgerIngredients = ({
 		if (section) {
 			section.scrollIntoView({
 				behavior: 'smooth',
-				block: 'start'
+				block: 'start',
 			});
 		}
 
@@ -100,7 +102,6 @@ export const BurgerIngredients = ({
 				</ul>
 			</nav>
 			<div className={styles.ingredient_widgets} ref={containerRef}>
-
 				<div id="bun" ref={(el: any) => (sectionRefs.current.bun = el)}>
 					<h2 className="text text_type_main-medium">Булки</h2>
 					<IngredientWidget ingredients={ingredients} itemType="bun" />

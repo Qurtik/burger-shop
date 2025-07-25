@@ -26,11 +26,11 @@ import style from './ingredient-item.module.css';
 
 const IngredientItem = ({ item }: Props): React.JSX.Element => {
 	const [isOpen, setIsOpen, setIsClose] = useModal();
-	const ingredientsCount = useSelector(selectIngredientsCount)
+	const ingredientsCount = useSelector(selectIngredientsCount);
 	const count = ingredientsCount[item._id] || 0;
 
 	const [, dragRef] = useDrag({
-		type: item.type === "bun" ? "bun" : 'ingredient',
+		type: item.type === 'bun' ? 'bun' : 'ingredient',
 		item: { id: item._id },
 		// collect: (monitor) => ({
 		// 	dragginClass: monitor.isDragging() ? style.is_dragging : "",
@@ -71,13 +71,12 @@ const IngredientItem = ({ item }: Props): React.JSX.Element => {
 					''
 				)}
 				<span className={`text text_type_main-default pt-1`}>{item.name}</span>
-			</div >
+			</div>
 			{isOpen && (
 				<Modal title={'Детали ингредиента'} onClose={handleClose}>
 					<IngredientDetails currentIngredient={item} />
 				</Modal>
-			)
-			}
+			)}
 		</>
 	);
 };

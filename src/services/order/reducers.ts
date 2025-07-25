@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { createSlice } from '@reduxjs/toolkit';
 
 import { createOrder } from './actions';

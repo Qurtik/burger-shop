@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import { loadIngredients } from './actions';

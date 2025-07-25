@@ -29,21 +29,25 @@
 }
 
 /* Анимация перелива */
-@keyframes gradientShift {
+
+@keyframes gradient-shift {
 	0% {
 		background-position: 0% 50%;
 	}
+
 	50% {
 		background-position: 100% 50%;
 	}
+
 	100% {
 		background-position: 0% 50%;
 	}
 }
 
 /* Класс для активации анимации */
+
 .gradient_animate {
 	background: linear-gradient(90deg, #801ab3, #4c4cff, red);
 	background-size: 200% 100%;
-	animation: gradientShift 1.5s ease infinite;
+	animation: gradient-shift 1.5s ease infinite;
 }
