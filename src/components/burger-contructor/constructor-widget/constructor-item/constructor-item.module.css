@@ -1,9 +1,9 @@
 .constructor_element_card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .grag_icon {
-  cursor: grab;
+	cursor: grab;
 }
