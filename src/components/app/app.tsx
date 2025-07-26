@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { loadIngredients } from '@/services/ingredients/actions';
 import {
 	selectIngredients,

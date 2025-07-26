@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import { loadIngredients } from './actions';
@@ -33,30 +34,39 @@ export const ingredientsSlice = createSlice({
 	name: 'ingredients',
 	initialState,
 	reducers: {
+		addBun: (state, action: PayloadAction<{ id: string }>) => {
+			const bun = state.ingredients?.find((item) => item._id === action.payload.id);
+
+			state.ingredientsInContructor.push({ ...bun! });
+		},
 		changeBun: (state, action: PayloadAction<{ id: string }>) => {
 			const bun = state.ingredients?.find((item) => item._id === action.payload.id);
-			// const indexForReplace = state.ingredientsInContructor?.findIndex(
-			// 	(item) => item.type === 'bun'
-			// );
 
-			// TODO: Доделать
-			// const shouldUpdate = !(
-			// 	state.ingredientsInContructor[indexForReplace]._id === bun?._id
-			// );
-
-			// if (indexForReplace >= 0 && bun && shouldUpdate) {
-			// 	state.ingredientsInContructor[indexForReplace] = bun;
-			// }
-
-			const ingredientsWithNewBuns = state.ingredientsInContructor.map(
-				(ingredient) => {
-					if (ingredient.type === 'bun') {
-						ingredient = { ...bun! };
-					}
-					return ingredient;
-				}
+			const shouldUpdate = !state.ingredientsInContructor.find(
+				(item) => item.type === 'bun' && item._id === action.payload.id
 			);
-			state.ingredientsInContructor = ingredientsWithNewBuns;
+
+			if (shouldUpdate) {
+				const ingredientsWithNewBuns = state.ingredientsInContructor.map(
+					(ingredient) => {
+						if (ingredient.type === 'bun') {
+							ingredient = { ...bun! };
+						}
+						return ingredient;
+					}
+				);
+				state.ingredientsInContructor = ingredientsWithNewBuns;
+			}
+		},
+		changeOrder(
+			state,
+			action: PayloadAction<{ currentIndex: number; targetIndex: number }>
+		) {
+			const newItems = [...state.ingredientsInContructor];
+			const [movedItem] = newItems.splice(action.payload.currentIndex, 1);
+			newItems.splice(action.payload.targetIndex, 0, { ...movedItem });
+
+			state.ingredientsInContructor = newItems;
 		},
 		addIngredient: {
 			reducer(state, action: PayloadAction<{ id: string; uniqueKey: string }>) {
@@ -116,10 +126,10 @@ export const ingredientsSlice = createSlice({
 					state.isError = false;
 					state.ingredients = action.payload;
 
-					const firstBun = action.payload.find((item) => item.type === 'bun');
-					if (firstBun) {
-						state.ingredientsInContructor.push(firstBun);
-					}
+					// const firstBun = action.payload.find((item) => item.type === 'bun');
+					// if (firstBun) {
+					// 	state.ingredientsInContructor.push(firstBun);
+					// }
 				}
 			)
 			.addCase(loadIngredients.rejected, (state) => {
@@ -136,6 +146,7 @@ export const {
 	addIngredient,
 	removeIngredient,
 	clearIngredientsInConstructor,
+	changeOrder,
 } = ingredientsSlice.actions;
 
 export const {

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ConstructorElement } from '@krgaa/react-developer-burger-ui-components';
@@ -18,7 +19,6 @@ type ContructorWidgetProps = {
 const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Element => {
 	const buns = ingredients.find((bun) => bun.type === 'bun')!;
 	const ingredientsWithNoBuns = ingredients.filter((bun) => bun.type !== 'bun');
-	// const changeBun = ingredientsReducer;
 
 	const dispatch = useDispatch();
 
@@ -26,14 +26,23 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 		accept: 'ingredient',
 		collect: (monitor) => ({
 			isHover: monitor.isOver(),
+			// dropItem: console.log(() => monitor.getDropResult())
 		}),
 		drop: (item: { id: string }) => {
-			console.log(item);
 			dispatch(addIngredient(item));
-			// dispatch({
-			// 	type: 'ingredients/addIngredient',
-			// 	payload: item,
-			// });
+		},
+	});
+
+	const [{ isHoverStart }, dropRefStartBun] = useDrop({
+		accept: 'bun',
+		collect: (monitor) => ({
+			isHoverStart: monitor.isOver(),
+		}),
+		drop: (item: { id: string }) => {
+			dispatch({
+				type: 'ingredients/addBun',
+				payload: item,
+			});
 		},
 	});
 
@@ -43,7 +52,6 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 			isHoverTop: monitor.isOver(),
 		}),
 		drop: (item: { id: string }) => {
-			console.log(item);
 			dispatch({
 				type: 'ingredients/changeBun',
 				payload: item,
@@ -57,10 +65,20 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 			isHoverButtom: monitor.isOver(),
 		}),
 		drop: (item: { id: string }) => {
-			console.log(item);
 			dispatch(changeBun(item));
 		},
 	});
+
+	if (ingredients.length === 0) {
+		return (
+			<div
+				ref={dropRefStartBun as any}
+				className={`${styles.start_buns_area} ${isHoverStart ? styles.hover_area_buns : null}`}
+			>
+				<p className="text text_type_main-medium"> Перенесите булку сюда</p>
+			</div>
+		);
+	}
 
 	return (
 		<div
@@ -81,9 +99,13 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 				/>
 			</div>
 			<div className={`${styles.widgetItems}`}>
-				{ingredientsWithNoBuns.map((ingredient) => {
+				{ingredientsWithNoBuns.map((ingredient, index) => {
 					return (
-						<ContructorItem key={ingredient.uniqueKey} ingredient={ingredient} />
+						<ContructorItem
+							key={ingredient.uniqueKey}
+							ingredient={ingredient}
+							index={index}
+						/>
 					);
 				})}
 			</div>

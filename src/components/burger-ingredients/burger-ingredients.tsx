@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import IngredientWidget from './ingredients-widget/ingredient-widget';
 
@@ -20,24 +19,26 @@ export const BurgerIngredients = ({
 	ingredients,
 }: TBurgerIngredientsProps): React.JSX.Element => {
 	const [current, setCurrent] = useState('bun');
+
 	const containerRef = useRef<HTMLDivElement>(null);
-	const sectionRefs = useRef<{
-		bun: HTMLDivElement | null;
-		sauce: HTMLDivElement | null;
-		main: HTMLDivElement | null;
-	}>({
-		bun: null,
-		sauce: null,
-		main: null,
-	});
 	const isScrolling = useRef(false);
+
+	const observerOptions = {
+		root: containerRef.current,
+		threshold: 0.1,
+		rootMargin: '0px 0px -70% 0px',
+	};
+
+	const [bunRef, bunInView] = useInView(observerOptions);
+	const [mainRef, mainInView] = useInView(observerOptions);
+	const [sauceRef, sauceInView] = useInView(observerOptions);
 
 	const changeTab = (value: string): void => {
 		isScrolling.current = true;
 		setCurrent(value);
 
-		// Прокручиваем к нужной секции
-		const section = sectionRefs.current[value as keyof typeof sectionRefs.current];
+		const sectionId = `${value}-section`;
+		const section = document.getElementById(sectionId);
 		if (section) {
 			section.scrollIntoView({
 				behavior: 'smooth',
@@ -45,46 +46,19 @@ export const BurgerIngredients = ({
 			});
 		}
 
-		// Сброс флага после прокрутки
 		setTimeout(() => {
 			isScrolling.current = false;
 		}, 1000);
 	};
 
-	// Настройка Intersection Observer для автоактивации табов
+	// Автоматическое переключение табов при прокрутке
 	useEffect(() => {
-		const container = containerRef.current;
-		if (!container) return;
+		if (isScrolling.current) return;
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (isScrolling.current) return;
-
-				// Фильтруем видимые секции
-				const visibleSections = entries
-					.filter((entry) => entry.isIntersecting)
-					.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-
-				if (visibleSections.length > 0) {
-					// Берем верхнюю видимую секцию
-					const topSection = visibleSections[0];
-					setCurrent(topSection.target.id);
-				}
-			},
-			{
-				root: container,
-				threshold: 0.1,
-				rootMargin: '0px 0px -90% 0px',
-			}
-		);
-
-		// Наблюдаем все секции
-		Object.values(sectionRefs.current).forEach((section) => {
-			if (section) observer.observe(section);
-		});
-
-		return (): void => observer.disconnect();
-	}, []);
+		if (bunInView) setCurrent('bun');
+		else if (sauceInView) setCurrent('sauce');
+		else if (mainInView) setCurrent('main');
+	}, [bunInView, sauceInView, mainInView]);
 
 	return (
 		<section className={styles.burger_ingredients}>
@@ -102,33 +76,18 @@ export const BurgerIngredients = ({
 				</ul>
 			</nav>
 			<div className={styles.ingredient_widgets} ref={containerRef}>
-				<div id="bun" ref={(el: any) => (sectionRefs.current.bun = el)}>
+				<div id="bun-section" ref={bunRef}>
 					<h2 className="text text_type_main-medium">Булки</h2>
 					<IngredientWidget ingredients={ingredients} itemType="bun" />
 				</div>
-				{/* <IngredientWidget
-					ingredients={ingredients}
-					ingredientWidgetTitle="Булки"
-					itemType="bun"
-				/> */}
-				<div id="main" ref={(el: any) => (sectionRefs.current.main = el)}>
+				<div id="main-section" ref={mainRef}>
 					<h2 className="text text_type_main-medium">Начинки</h2>
 					<IngredientWidget ingredients={ingredients} itemType="main" />
 				</div>
-				{/* <IngredientWidget
-					ingredients={ingredients}
-					ingredientWidgetTitle="Начинки"
-					itemType="main"
-				/> */}
-				<div id="sauce" ref={(el: any) => (sectionRefs.current.sauce = el)}>
+				<div id="sauce-section" ref={sauceRef}>
 					<h2 className="text text_type_main-medium">Соусы</h2>
 					<IngredientWidget ingredients={ingredients} itemType="sauce" />
 				</div>
-				{/* <IngredientWidget
-					ingredients={ingredients}
-					ingredientWidgetTitle="Соусы"
-					itemType="sauce"
-				/> */}
 			</div>
 		</section>
 	);
