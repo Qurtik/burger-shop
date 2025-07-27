@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { loadIngredients } from '@/services/ingredients/actions';
 import {
 	selectIngredients,
@@ -49,7 +48,6 @@ export const App = (): React.JSX.Element => {
 						<p>Нет доступных ингредиентов</p>
 					) : (
 						<>
-							{JSON.stringify(selectIngredientsInConstructor)}
 							<BurgerIngredients ingredients={ingredients} />
 							<BurgerConstructor ingredients={ingredientsInContructor} />
 						</>
