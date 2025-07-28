@@ -1,52 +1,92 @@
+/* eslint-disable prettier/prettier */
+import {
+	clearIngredientsInConstructor,
+	selectIngredientsInConstructor,
+} from '@/services/ingredients/reducers';
+import { createOrder } from '@/services/order/actions';
+import { selectOrderState } from '@/services/order/reducers';
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../shared/modal/modal';
 import { useModal } from '../shared/modal/useModal';
 import ContructorWidget from './constructor-widget/constructor-widget';
 import OrderDetails from './order-details/order-details';
 
+import type { AppDispatch } from '@/services/store';
 import type { TIngredient } from '@utils/types';
 import type React from 'react';
 
 import styles from './burger-constructor.module.css';
 
 type TBurgerConstructorProps = {
-  ingredients: TIngredient[];
+	ingredients: TIngredient[];
 };
 
 export const BurgerConstructor = ({
-  ingredients,
+	ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
-  const [isOpen, setIsOpen, setIsClose] = useModal();
+	const [isOpen, setIsOpen, setIsClose] = useModal();
+	const totalOrderPrice = useSelector(selectIngredientsInConstructor).reduce(
+		(acc, item) => acc + item.price,
+		0
+	);
+	const ingredientsIds = useSelector(selectIngredientsInConstructor).map(
+		(item) => item._id
+	);
+	const {
+		order,
+		// , isError
+		isLoading,
+	} = useSelector(selectOrderState);
+	const dispatch = useDispatch<AppDispatch>();
 
-  const handleOpen = (): void => {
-    setIsOpen();
-  };
+	const handleClick = (): void => {
+		void handleOpen();
+	};
 
-  const handleClose = (): void => {
-    setIsClose();
-  };
+	const handleOpen = async (): Promise<void> => {
+		try {
+			await dispatch(createOrder(ingredientsIds)).unwrap();
+			dispatch(clearIngredientsInConstructor());
+			setIsOpen();
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  return (
-    <div className={`${styles.burger_constructor_page}  pt-25`}>
-      <section className={`${styles.burger_constructor_widgets}`}>
-        <ContructorWidget ingredients={ingredients} />
-      </section>
+	const handleClose = (): void => {
+		setIsClose();
+	};
 
-      <div className={`${styles.burger_constructor_footer} pt-10`}>
-        <span className="text text_type_digits-medium">
-          0 <CurrencyIcon type="primary" />
-        </span>
-        <Button htmlType="button" type="primary" size="medium" onClick={handleOpen}>
-          Оформить заказ
-        </Button>
-      </div>
+	return (
+		<div className={`${styles.burger_constructor_page} pt-25`}>
+			<section
+				className={`${styles.burger_constructor_widgets} ${isLoading ? styles.disabled : ''}`}
+			>
+				<ContructorWidget ingredients={ingredients} />
+			</section>
 
-      {isOpen && (
-        <Modal onClose={handleClose}>
-          <OrderDetails orderNum={123456} />
-        </Modal>
-      )}
-    </div>
-  );
+			<div className={`${styles.burger_constructor_footer} pt-10`}>
+				<span className="text text_type_digits-medium">
+					{totalOrderPrice} <CurrencyIcon type="primary" />
+				</span>
+				<Button
+					htmlType="button"
+					type="primary"
+					size="medium"
+					extraClass={isLoading ? styles.gradient_animate : ''}
+					onClick={handleClick}
+				>
+					{isLoading ? 'Оформляем...' : 'Оформить заказ'}
+				</Button>
+			</div>
+
+			{isOpen && order && (
+				<Modal onClose={handleClose}>
+					<OrderDetails orderNum={order.order.number} />
+				</Modal>
+			)}
+		</div>
+	);
 };

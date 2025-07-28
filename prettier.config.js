@@ -2,14 +2,14 @@
 
 // const config: Config = {
 	const config = {
-  endOfLine: 'lf',
+//   endOfLine: "auto",
   jsxSingleQuote: false,
   printWidth: 89,
   semi: true,
   singleQuote: true,
-  tabWidth: 2,
+  tabWidth: 3,
   trailingComma: 'es5',
-  useTabs: false,
+  useTabs: true,
 };
 
 export default config;

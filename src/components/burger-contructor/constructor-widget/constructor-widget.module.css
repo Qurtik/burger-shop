@@ -1,25 +1,31 @@
 .widget {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  /* width: 90%; */
-
-  /* height: 90%; */
-  height: 100%;
-
-  /* overflow: auto; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
 }
 
 .widgetItems {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	overflow: auto;
+}
 
-  /* width: 90%; */
+.hover_area_buns {
+	box-shadow: 0 0 3px 3px purple;
+}
 
-  /* height: 60vh; */
+.hover_area_ingredients {
+	box-shadow: 0 0 3px 3px purple;
+}
+
+.start_buns_area {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 350px;
+	height: 300px;
 }

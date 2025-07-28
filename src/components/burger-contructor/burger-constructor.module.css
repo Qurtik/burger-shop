@@ -1,25 +1,53 @@
 .burger_constructor_page {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-  color: var(--text-primary-color);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 600px;
+	color: var(--text-primary-color);
 }
 
 .burger_constructor_widgets {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 80%;
-  padding-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 80%;
+	padding-bottom: 20px;
 
-  /* overflow: auto; */
+	/* overflow: auto; */
 }
 
 .burger_constructor_footer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 40px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 40px;
+}
+
+.disabled {
+	opacity: 0.5;
+}
+
+/* Анимация перелива */
+
+@keyframes gradient-shift {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* Класс для активации анимации */
+
+.gradient_animate {
+	background: linear-gradient(90deg, #801ab3, #4c4cff, red);
+	background-size: 200% 100%;
+	animation: gradient-shift 1.5s ease infinite;
 }
