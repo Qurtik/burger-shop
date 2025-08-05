@@ -29,7 +29,9 @@
       "@components/*": ["src/components/*"],
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "plugins": [{ "name": "typescript-plugin-css-modules" }],

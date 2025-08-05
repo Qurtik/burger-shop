@@ -1,61 +1,56 @@
-import { loadIngredients } from '@/services/ingredients/actions';
-import {
-	selectIngredients,
-	selectIngredientsInConstructor,
-	// selectIngredientsState,
-	selectIsError,
-	selectIsLoading,
-} from '@/services/ingredients/reducers';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import BurgerConstructorPage from '@/pages/constructor';
+import ForgotPasswordPage from '@/pages/forgot-password';
+import IngredientPage from '@/pages/ingredient';
+import LoginPage from '@/pages/login';
+import ProfilePage from '@/pages/profile';
+import RegisterPage from '@/pages/register';
+import ResetPasswordPage from '@/pages/reset-password';
+import AppHeader from '@/widgets/app-header';
+import IngredientDetailsModal from '@/widgets/ingredient-details';
+import { OrdersHistory, Profile } from '@/widgets/Profile';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-import { AppHeader } from '@components/app-header/app-header';
-import { BurgerConstructor } from '@components/burger-contructor/burger-constructor';
-import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-
-import type { AppDispatch } from '@/services/store';
-
-import styles from './app.module.css';
-
-export const App = (): React.JSX.Element => {
-	// const { ingredients, isLoading, isError } = useSelector(selectIngredientsState);
-	// FIXME: Почему происходит перерсовка элементов компонента?
-	const ingredients = useSelector(selectIngredients);
-	const isLoading = useSelector(selectIsLoading);
-	const isError = useSelector(selectIsError);
-
-	const ingredientsInContructor = useSelector(selectIngredientsInConstructor);
-
-	const dispatch = useDispatch<AppDispatch>();
-
-	useEffect(() => {
-		void dispatch(loadIngredients());
-	}, [dispatch]);
-
+const Layout = (): React.JSX.Element => {
 	return (
 		<>
-			<div className={styles.app}>
-				<AppHeader />
-				<h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
-					Соберите бургер
-				</h1>
-				<main className={`${styles.main} pl-5 pr-5`}>
-					{isLoading ? (
-						<p>Loading...</p>
-					) : isError ? (
-						<p>Error</p>
-					) : !ingredients?.length ? (
-						<p>Нет доступных ингредиентов</p>
-					) : (
-						<>
-							<BurgerIngredients ingredients={ingredients} />
-							<BurgerConstructor ingredients={ingredientsInContructor} />
-						</>
-					)}
-				</main>
-			</div>
+			<AppHeader />
+			<Outlet />
 		</>
 	);
 };
 
-export default App;
+export const App = (): React.JSX.Element => {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route path="/" element={<BurgerConstructorPage />}>
+						<Route
+							path="ingredientModal/:id"
+							element={<IngredientDetailsModal />}
+						/>
+					</Route>
+
+					{/* <Route path="/test" element={<BurgerConstructorPage />}>
+						<Route
+							path="/test/ingredientModal"
+							element={<IngredientDetailsModal />}
+						/>
+					</Route> */}
+
+					{/* <Route path="ingredientModal/:id" element={<IngredientDetailsModal />} /> */}
+					<Route path="/profile" element={<ProfilePage />}>
+						<Route path="" element={<Profile />} />
+						<Route path="orders" element={<OrdersHistory />} />
+					</Route>
+					<Route path="/feed" element={<div>Feed</div>} />
+					<Route path="/ingredients/:id" element={<IngredientPage />} />
+				</Route>
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+				<Route path="/reset-password" element={<ResetPasswordPage />} />
+			</Routes>
+		</BrowserRouter>
+	);
+};

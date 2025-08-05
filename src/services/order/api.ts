@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { apiUrl } from '@/components/shared/urlApi';
+import { apiUrl } from '@/shared/urlApi';
 import { checkResponse } from '@/utils/checkResponse';
 
 export const create = async <T>(ingredientIds: string[]): Promise<T> => {
