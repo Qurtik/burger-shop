@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 
 /* eslint-disable prettier/prettier */
+import { registerUser } from '@/services/auth/actions';
+import { selectErrorText, selectIsLoading } from '@/services/auth/reducers';
 import { Card } from '@/shared/ui';
 import {
 	Button,
@@ -8,8 +10,10 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
+import type { AppDispatch } from '@/services/store';
 import type { JSX } from 'react';
 
 import styles from './register-page.module.css';
@@ -21,6 +25,10 @@ type TForm = {
 };
 
 export const RegisterPage = (): JSX.Element => {
+	const dispatch = useDispatch<AppDispatch>();
+	const errorText = useSelector(selectErrorText);
+	const isLoading = useSelector(selectIsLoading);
+	const navigate = useNavigate();
 	const [form, setForm] = useState<TForm>({
 		username: '',
 		email: '',
@@ -34,8 +42,27 @@ export const RegisterPage = (): JSX.Element => {
 		}));
 	};
 
+	const handleClick = (): void => {
+		dispatch(
+			registerUser({
+				...form,
+				name: form.username,
+			})
+		)
+			.unwrap()
+			.then(() => {
+				void navigate('/');
+			})
+			.catch((__) => {
+				/* */
+			});
+	};
+
 	return (
 		<div className={styles.page}>
+			{errorText && (
+				<p className="text_error text text_type_main-medium pb-8">{errorText}</p>
+			)}
 			<Card
 				title="Регистрация"
 				footer={
@@ -52,8 +79,6 @@ export const RegisterPage = (): JSX.Element => {
 					value={form.username}
 					placeholder={'Имя'}
 					name={'username'}
-					error={false}
-					errorText={'Ошибка'}
 					size={'default'}
 					extraClass="ml-1"
 				/>
@@ -63,8 +88,6 @@ export const RegisterPage = (): JSX.Element => {
 					value={form.email}
 					placeholder={'E-mail'}
 					name={'name'}
-					error={false}
-					errorText={'Ошибка'}
 					size={'default'}
 					extraClass="ml-1"
 				/>
@@ -74,7 +97,9 @@ export const RegisterPage = (): JSX.Element => {
 					name={'Пароль'}
 					extraClass="mb-2"
 				/>
-				<Button htmlType="button">Зарегистрироваться</Button>
+				<Button htmlType="button" onClick={handleClick} disabled={isLoading}>
+					{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
+				</Button>
 			</Card>
 		</div>
 	);

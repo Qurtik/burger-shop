@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
+import { resetPassword } from '@/services/auth/actions';
 import { Card } from '@/shared/ui';
 import { Button, Input } from '@krgaa/react-developer-burger-ui-components';
 import { useState, type JSX } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import type { AppDispatch } from '@/services/store';
 
 import styles from './forgot-password-page.module.css';
 
@@ -11,6 +15,9 @@ type TForm = {
 };
 
 export const ForgotPasswordPage = (): JSX.Element => {
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [form, setForm] = useState<TForm>({
 		email: '',
 	});
@@ -20,6 +27,19 @@ export const ForgotPasswordPage = (): JSX.Element => {
 			...prevState,
 			[input]: inputValue,
 		}));
+	};
+
+	const handleSubmit = (): void => {
+		const fetch = async (): Promise<void> => {
+			try {
+				await dispatch(resetPassword(form.email));
+				void navigate('/reset-password', { state: location });
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		void fetch();
 	};
 
 	return (
@@ -45,7 +65,9 @@ export const ForgotPasswordPage = (): JSX.Element => {
 					size={'default'}
 					extraClass="ml-1"
 				/>
-				<Button htmlType="button">Восстановить</Button>
+				<Button htmlType="button" onClick={handleSubmit}>
+					Восстановить
+				</Button>
 			</Card>
 		</div>
 	);

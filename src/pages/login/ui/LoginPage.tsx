@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+import { loginUser } from '@/services/auth/actions';
+import { clearError, selectErrorText, selectIsLoading } from '@/services/auth/reducers';
 import { Card } from '@/shared/ui';
 import {
 	Button,
@@ -6,7 +8,10 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useState, type JSX } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
+import type { AppDispatch } from '@/services/store';
 
 import styles from './login-page.module.css';
 
@@ -16,20 +21,40 @@ type TForm = {
 };
 
 export const LoginPage = (): JSX.Element => {
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
+	const errorText = useSelector(selectErrorText);
+	const isLoading = useSelector(selectIsLoading);
 	const [form, setForm] = useState<TForm>({
-		email: '',
-		password: '',
+		email: 'qwddaW@mail.ru',
+		password: 'testtest',
 	});
 
 	const handleChange = (input: string, inputValue: string): void => {
+		dispatch(clearError());
 		setForm((prevState) => ({
 			...prevState,
 			[input]: inputValue,
 		}));
 	};
 
+	const handleClick = (): void => {
+		dispatch(loginUser(form))
+			.unwrap()
+			.then(() => {
+				void navigate('/');
+			})
+			.catch((__) => {
+				/* */
+			});
+	};
+
 	return (
 		<div className={styles.page}>
+			{errorText && (
+				<p className={`text_error text text_type_main-medium pb-8`}>{errorText}</p>
+			)}
+
 			<Card
 				title="Вход"
 				footer={
@@ -51,18 +76,18 @@ export const LoginPage = (): JSX.Element => {
 					value={form.email}
 					placeholder={'E-mail'}
 					name={'name'}
-					error={false}
-					errorText={'Ошибка'}
 					size={'default'}
 					extraClass="ml-1"
 				/>
 				<PasswordInput
 					onChange={(e) => handleChange('password', e.target.value)}
 					value={form.password}
-					name={'Пароль'}
+					name={'password'}
 					extraClass="mb-2"
 				/>
-				<Button htmlType="button">Войти</Button>
+				<Button htmlType="button" onClick={handleClick} disabled={isLoading}>
+					{isLoading ? 'Загружаем...' : 'Войти'}
+				</Button>
 			</Card>
 		</div>
 	);
