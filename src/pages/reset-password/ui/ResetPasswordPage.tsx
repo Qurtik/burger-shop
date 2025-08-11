@@ -5,8 +5,8 @@ import {
 	Input,
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
-import { useState, type JSX } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState, type JSX } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './reset-password-page.module.css';
 
@@ -16,10 +16,20 @@ type TForm = {
 };
 
 export const ResetPasswordPage = (): JSX.Element => {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [form, setForm] = useState<TForm>({
 		code: '',
 		password: '',
 	});
+
+	useEffect(() => {
+		const prevPage = location.state as Location;
+
+		if (!prevPage || prevPage.pathname !== '/forgot-password') {
+			navigate('/forgot-password');
+		}
+	}, []);
 
 	const handleChange = (input: string, inputValue: string): void => {
 		setForm((prevState) => ({
