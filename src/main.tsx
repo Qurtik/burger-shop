@@ -1,4 +1,5 @@
-import { StrictMode } from 'react';
+/* eslint-disable prettier/prettier */
+// import { StrictMode } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { createRoot } from 'react-dom/client';
@@ -16,11 +17,11 @@ import './index.css';
 const store = configureStore();
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<Provider store={store}>
-			<DndProvider backend={HTML5Backend}>
-				<App />
-			</DndProvider>
-		</Provider>
-	</StrictMode>
+	// <StrictMode>
+	<Provider store={store}>
+		<DndProvider backend={HTML5Backend}>
+			<App />
+		</DndProvider>
+	</Provider>
+	// </StrictMode>
 );

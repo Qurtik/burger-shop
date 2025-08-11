@@ -3,6 +3,7 @@ import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import { loadIngredients } from './actions';
 
+import type { AppThunk, RootState } from '../store';
 import type { TIngredient } from '@/utils/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
@@ -29,6 +30,20 @@ const initialState: State = {
 	isLoading: false,
 	isError: false,
 };
+
+// FIXME: Проверить
+export const getIngredientById =
+	(id: string): AppThunk<Promise<TIngredient | undefined | null>> =>
+	async (dispatch, getState) => {
+		const ingredientSelector = selectIngredientById(id);
+		const ingredient = ingredientSelector(getState());
+
+		if (ingredient) return ingredient;
+
+		await dispatch(loadIngredients());
+
+		return ingredientSelector(getState()) ?? null;
+	};
 
 export const ingredientsSlice = createSlice({
 	name: 'ingredients',
@@ -105,14 +120,10 @@ export const ingredientsSlice = createSlice({
 	selectors: {
 		selectIngredientsState: (state) => state,
 		selectIngredients: (state) => state.ingredients,
+		selectIngredientById: (state) => state.ingredients,
 		selectIngredientsInConstructor: (state) => state.ingredientsInContructor,
 		selectIsLoading: (state) => state.isLoading,
 		selectIsError: (state) => state.isError,
-		// getTotalOrderPrice: createSelector(
-		// 	(state) =>
-		// 		ingredientsSlice.getSelectors().selectIngredientsInConstructor(state),
-		// 	(ingredients) => ingredients.reduce
-		// ),
 	},
 	extraReducers(builder) {
 		builder
@@ -125,11 +136,6 @@ export const ingredientsSlice = createSlice({
 					state.isLoading = false;
 					state.isError = false;
 					state.ingredients = action.payload;
-
-					// const firstBun = action.payload.find((item) => item.type === 'bun');
-					// if (firstBun) {
-					// 	state.ingredientsInContructor.push(firstBun);
-					// }
 				}
 			)
 			.addCase(loadIngredients.rejected, (state) => {
@@ -169,3 +175,10 @@ export const selectIngredientsCount = createSelector(
 		return counts;
 	}
 );
+
+export const selectIngredientById = (
+	id: string
+): ((state: RootState) => TIngredient | undefined) =>
+	createSelector([selectIngredients], (ingredients) =>
+		ingredients?.find((item) => item._id === id)
+	);

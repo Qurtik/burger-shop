@@ -1,11 +1,14 @@
+/* eslint-disable prettier/prettier */
 import { combineSlices, configureStore as createStore } from '@reduxjs/toolkit';
 
+import { authSlice } from './auth/reducers';
 import { ingredientsSlice } from './ingredients/reducers';
 import { orderSlice } from './order/reducers';
 
-const rootReducer = combineSlices(ingredientsSlice, orderSlice);
+import type { ThunkAction, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
+const rootReducer = combineSlices(ingredientsSlice, orderSlice, authSlice);
+
 export const configureStore = (initialState?: Partial<RootState>) => {
 	return createStore({
 		reducer: rootReducer,
@@ -16,3 +19,11 @@ export const configureStore = (initialState?: Partial<RootState>) => {
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof configureStore>;
 export type AppDispatch = AppStore['dispatch'];
+export type AppThunkDispatch = ThunkDispatch<RootState, unknown, UnknownAction>;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+	ReturnType,
+	RootState,
+	unknown,
+	UnknownAction
+>;

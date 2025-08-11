@@ -6,10 +6,10 @@ import {
 import { createOrder } from '@/services/order/actions';
 import { selectOrderState } from '@/services/order/reducers';
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
+import Modal from '@shared/ui/modal/modal';
+import { useModal } from '@shared/ui/modal/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Modal from '../shared/modal/modal';
-import { useModal } from '../shared/modal/useModal';
 import ContructorWidget from './constructor-widget/constructor-widget';
 import OrderDetails from './order-details/order-details';
 
