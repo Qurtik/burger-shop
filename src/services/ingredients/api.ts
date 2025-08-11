@@ -1,13 +1,22 @@
-import { apiUrl } from '@/shared/urlApi';
-import { checkResponse } from '@/utils/checkResponse';
+import Http from '@/shared/api/http';
 
 import type { TIngredient } from '@/utils/types';
 
+type Response = {
+	success: boolean;
+	data: TIngredient[];
+};
+
+const http = new Http();
+
 export const fetchIngredients = async (): Promise<TIngredient[]> => {
-	return fetch(`${apiUrl}/ingredients`)
-		.then((response) => checkResponse<TIngredient[]>(response))
-		.catch((error: Error) => {
-			console.error('Ошибка при загрузке ингредиентов:', error);
-			throw new Error('Ошибка при загрузке ингредиентов');
+	return http
+		.get<Response>('/ingredients')
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			console.error('Ошибка при загрузки ингредиентов:', error);
+			throw new Error('Ошибка при загрузки ингредиентов');
 		});
 };

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createSlice } from '@reduxjs/toolkit';
 
 import { createOrder } from './actions';
@@ -53,8 +54,6 @@ export const orderSlice = createSlice({
 });
 
 export default orderSlice.reducer;
-
-// export const {  } = ingredientsSlice.actions;
 
 export const { selectOrderState, selectOrder, selectIsError, selectIsLoading } =
 	orderSlice.selectors;
