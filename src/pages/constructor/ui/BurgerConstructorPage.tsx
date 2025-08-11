@@ -9,7 +9,9 @@ import {
 } from '@/services/ingredients/reducers';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useParams } from 'react-router-dom';
+import {
+	Outlet,
+} from 'react-router-dom';
 
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
@@ -25,10 +27,6 @@ export const BurgerConstructorPage = (): React.JSX.Element => {
 	const isError = useSelector(selectIsError);
 
 	const ingredientsInContructor = useSelector(selectIngredientsInConstructor);
-
-	const urlParams = useParams();
-
-	console.log(urlParams);
 
 	const dispatch = useDispatch<AppDispatch>();
 

@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-
 import { changeOrder, removeIngredient } from '@/services/ingredients/reducers';
 import {
 	ConstructorElement,
@@ -31,10 +30,6 @@ const ContructorItem = ({ ingredient, index }: TProps): React.JSX.Element => {
 			const itemIndex = item.index;
 			dispatch(changeOrder({ currentIndex: itemIndex + 1, targetIndex: index + 1 }));
 		},
-		// hover(item) {
-		// 	// console.log("hovered index:",item)
-		// 	// console.log("current index:",index)
-		// },
 	});
 
 	const [, drag] = useDrag({
