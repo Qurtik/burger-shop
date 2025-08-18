@@ -7,7 +7,7 @@ import {
 	Input,
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
-import { useState, type JSX } from 'react';
+import { FormEvent, useState, type JSX } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -38,7 +38,8 @@ export const LoginPage = (): JSX.Element => {
 		}));
 	};
 
-	const handleClick = (): void => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
 		dispatch(loginUser(form))
 			.unwrap()
 			.then(() => {
@@ -55,40 +56,43 @@ export const LoginPage = (): JSX.Element => {
 				<p className={`text_error text text_type_main-medium pb-8`}>{errorText}</p>
 			)}
 
-			<Card
-				title="Вход"
-				footer={
-					<>
-						<span>
-							Вы - новый пользователь?{' '}
-							<Link to="/register">Зарегистрироваться</Link>
-						</span>
-						<span>
-							Забыли пароль?{' '}
-							<Link to="/forgot-password">Восстановить пароль</Link>
-						</span>
-					</>
-				}
-			>
-				<Input
-					type={'text'}
-					onChange={(e) => handleChange('email', e.target.value)}
-					value={form.email}
-					placeholder={'E-mail'}
-					name={'name'}
-					size={'default'}
-					extraClass="ml-1"
-				/>
-				<PasswordInput
-					onChange={(e) => handleChange('password', e.target.value)}
-					value={form.password}
-					name={'password'}
-					extraClass="mb-2"
-				/>
-				<Button htmlType="button" onClick={handleClick} disabled={isLoading}>
-					{isLoading ? 'Загружаем...' : 'Войти'}
-				</Button>
-			</Card>
+			<form onSubmit={handleSubmit}>
+				<Card
+					title="Вход"
+					footer={
+						<>
+							<span>
+								Вы - новый пользователь?{' '}
+								<Link to="/register">Зарегистрироваться</Link>
+							</span>
+							<span>
+								Забыли пароль?{' '}
+								<Link to="/forgot-password">Восстановить пароль</Link>
+							</span>
+						</>
+					}
+				>
+					<Input
+						type={'text'}
+						onChange={(e) => handleChange('email', e.target.value)}
+						value={form.email}
+						placeholder={'E-mail'}
+						name={'name'}
+						size={'default'}
+						extraClass="ml-1"
+					/>
+					<PasswordInput
+						onChange={(e) => handleChange('password', e.target.value)}
+						value={form.password}
+						name={'password'}
+						extraClass="mb-2"
+					/>
+
+					<Button htmlType="submit" disabled={isLoading}>
+						{isLoading ? 'Загружаем...' : 'Войти'}
+					</Button>
+				</Card>
+			</form>
 		</div>
 	);
 };

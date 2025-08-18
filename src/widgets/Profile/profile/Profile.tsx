@@ -9,7 +9,7 @@ import {
 } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useRef, useState } from 'react';
 
-import type { JSX } from 'react';
+import type { FormEvent, JSX } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './profile.module.css';
@@ -60,7 +60,8 @@ export const Profile = (): JSX.Element => {
 		setIsEdit(true);
 	};
 
-	const handleSave = () => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
 		dispatch(
 			changeUserData({
 				email: form.login,
@@ -75,56 +76,56 @@ export const Profile = (): JSX.Element => {
 	};
 
 	return (
-		<Card
-			footer={
-				isEdit && (
-					<div className={styles.card__action}>
-						<Button htmlType="button" onClick={handleSave}>
-							Сохранить
-						</Button>
-						<Button htmlType="button" onClick={handleCancelEdit}>
-							Отменить
-						</Button>
-					</div>
-				)
-			}
-		>
-			<Input
-				type={'text'}
-				onChange={(e) => handleChange('username', e.target.value)}
-				ref={inputRef}
-				value={form.username}
-				placeholder={'Имя'}
-				name={'username'}
-				error={false}
-				errorText={'Ошибка'}
-				size={'default'}
-				extraClass="ml-1"
-				icon={isEdit ? undefined : 'EditIcon'}
-				onIconClick={() => handleIconClick(inputRef.current)}
-				readOnly={!isEdit}
-			/>
-			<Input
-				type={'text'}
-				onChange={(e) => handleChange('login', e.target.value)}
-				ref={loginRef}
-				value={form.login}
-				placeholder={'Логин'}
-				name={'email'}
-				size={'default'}
-				extraClass="ml-1"
-				icon={isEdit ? undefined : 'EditIcon'}
-				onIconClick={() => handleIconClick(loginRef.current)}
-				readOnly={!isEdit}
-			/>
-			<PasswordInput
-				onChange={(e) => handleChange('password', e.target.value)}
-				value={form.password}
-				name={'password'}
-				icon={isEdit ? undefined : 'EditIcon'}
-				extraClass="mb-2"
-				readOnly={!isEdit}
-			/>
-		</Card>
+		<form onSubmit={handleSubmit}>
+			<Card
+				footer={
+					isEdit && (
+						<div className={styles.card__action}>
+							<Button htmlType="submit">Сохранить</Button>
+							<Button htmlType="button" onClick={handleCancelEdit}>
+								Отменить
+							</Button>
+						</div>
+					)
+				}
+			>
+				<Input
+					type={'text'}
+					onChange={(e) => handleChange('username', e.target.value)}
+					ref={inputRef}
+					value={form.username}
+					placeholder={'Имя'}
+					name={'username'}
+					error={false}
+					errorText={'Ошибка'}
+					size={'default'}
+					extraClass="ml-1"
+					icon={isEdit ? undefined : 'EditIcon'}
+					onIconClick={() => handleIconClick(inputRef.current)}
+					readOnly={!isEdit}
+				/>
+				<Input
+					type={'text'}
+					onChange={(e) => handleChange('login', e.target.value)}
+					ref={loginRef}
+					value={form.login}
+					placeholder={'Логин'}
+					name={'email'}
+					size={'default'}
+					extraClass="ml-1"
+					icon={isEdit ? undefined : 'EditIcon'}
+					onIconClick={() => handleIconClick(loginRef.current)}
+					readOnly={!isEdit}
+				/>
+				<PasswordInput
+					onChange={(e) => handleChange('password', e.target.value)}
+					value={form.password}
+					name={'password'}
+					icon={isEdit ? undefined : 'EditIcon'}
+					extraClass="mb-2"
+					readOnly={!isEdit}
+				/>
+			</Card>
+		</form>
 	);
 };

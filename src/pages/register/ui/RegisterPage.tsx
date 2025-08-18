@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import type { AppDispatch } from '@/services/store';
-import type { JSX } from 'react';
+import type { FormEvent, JSX } from 'react';
 
 import styles from './register-page.module.css';
 
@@ -42,7 +42,8 @@ export const RegisterPage = (): JSX.Element => {
 		}));
 	};
 
-	const handleClick = (): void => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
 		dispatch(
 			registerUser({
 				...form,
@@ -63,44 +64,47 @@ export const RegisterPage = (): JSX.Element => {
 			{errorText && (
 				<p className="text_error text text_type_main-medium pb-8">{errorText}</p>
 			)}
-			<Card
-				title="Регистрация"
-				footer={
-					<>
-						<span>
-							Уже зарегистрированы? <Link to="/login">Войти</Link>
-						</span>
-					</>
-				}
-			>
-				<Input
-					type={'text'}
-					onChange={(e) => handleChange('username', e.target.value)}
-					value={form.username}
-					placeholder={'Имя'}
-					name={'username'}
-					size={'default'}
-					extraClass="ml-1"
-				/>
-				<Input
-					type={'text'}
-					onChange={(e) => handleChange('email', e.target.value)}
-					value={form.email}
-					placeholder={'E-mail'}
-					name={'name'}
-					size={'default'}
-					extraClass="ml-1"
-				/>
-				<PasswordInput
-					onChange={(e) => handleChange('password', e.target.value)}
-					value={form.password}
-					name={'Пароль'}
-					extraClass="mb-2"
-				/>
-				<Button htmlType="button" onClick={handleClick} disabled={isLoading}>
-					{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
-				</Button>
-			</Card>
+
+			<form onSubmit={handleSubmit}>
+				<Card
+					title="Регистрация"
+					footer={
+						<>
+							<span>
+								Уже зарегистрированы? <Link to="/login">Войти</Link>
+							</span>
+						</>
+					}
+				>
+					<Input
+						type={'text'}
+						onChange={(e) => handleChange('username', e.target.value)}
+						value={form.username}
+						placeholder={'Имя'}
+						name={'username'}
+						size={'default'}
+						extraClass="ml-1"
+					/>
+					<Input
+						type={'text'}
+						onChange={(e) => handleChange('email', e.target.value)}
+						value={form.email}
+						placeholder={'E-mail'}
+						name={'name'}
+						size={'default'}
+						extraClass="ml-1"
+					/>
+					<PasswordInput
+						onChange={(e) => handleChange('password', e.target.value)}
+						value={form.password}
+						name={'Пароль'}
+						extraClass="mb-2"
+					/>
+					<Button htmlType="submit" disabled={isLoading}>
+						{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
+					</Button>
+				</Card>
+			</form>
 		</div>
 	);
 };

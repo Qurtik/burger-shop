@@ -2,7 +2,7 @@
 import { resetPassword } from '@/services/auth/actions';
 import { Card } from '@/shared/ui';
 import { Button, Input } from '@krgaa/react-developer-burger-ui-components';
-import { useState, type JSX } from 'react';
+import { FormEvent, useState, type JSX } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,8 @@ export const ForgotPasswordPage = (): JSX.Element => {
 		}));
 	};
 
-	const handleSubmit = (): void => {
+	const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
 		const fetch = async (): Promise<void> => {
 			try {
 				await dispatch(resetPassword(form.email));
@@ -44,31 +45,31 @@ export const ForgotPasswordPage = (): JSX.Element => {
 
 	return (
 		<div className={styles.page}>
-			<Card
-				title="Вход"
-				footer={
-					<>
-						<span>
-							Вспоминили пароль? <Link to="/login">Войти</Link>
-						</span>
-					</>
-				}
-			>
-				<Input
-					type={'text'}
-					onChange={(e) => handleChange('email', e.target.value)}
-					value={form.email}
-					placeholder={'Укажите E-mail'}
-					name={'email'}
-					error={false}
-					errorText={'Ошибка'}
-					size={'default'}
-					extraClass="ml-1"
-				/>
-				<Button htmlType="button" onClick={handleSubmit}>
-					Восстановить
-				</Button>
-			</Card>
+			<form onSubmit={handleSubmit}>
+				<Card
+					title="Вход"
+					footer={
+						<>
+							<span>
+								Вспоминили пароль? <Link to="/login">Войти</Link>
+							</span>
+						</>
+					}
+				>
+					<Input
+						type={'text'}
+						onChange={(e) => handleChange('email', e.target.value)}
+						value={form.email}
+						placeholder={'Укажите E-mail'}
+						name={'email'}
+						error={false}
+						errorText={'Ошибка'}
+						size={'default'}
+						extraClass="ml-1"
+					/>
+					<Button htmlType="submit">Восстановить</Button>
+				</Card>
+			</form>
 		</div>
 	);
 };
