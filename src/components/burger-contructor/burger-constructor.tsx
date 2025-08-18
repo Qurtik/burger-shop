@@ -18,6 +18,8 @@ import type { TIngredient } from '@utils/types';
 import type React from 'react';
 
 import styles from './burger-constructor.module.css';
+import { selectUser } from '@/services/auth/reducers';
+import { useNavigate } from 'react-router-dom';
 
 type TBurgerConstructorProps = {
 	ingredients: TIngredient[];
@@ -26,7 +28,10 @@ type TBurgerConstructorProps = {
 export const BurgerConstructor = ({
 	ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
+	const currentUser = useSelector(selectUser);
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen, setIsClose] = useModal();
+
 	const totalOrderPrice = useSelector(selectIngredientsInConstructor).reduce(
 		(acc, item) => acc + item.price,
 		0
@@ -42,13 +47,21 @@ export const BurgerConstructor = ({
 	const dispatch = useDispatch<AppDispatch>();
 
 	const handleClick = (): void => {
-		void handleOpen();
+		if (!currentUser) {
+			navigate('/login');
+		} else {
+			void handleOpen();
+		}
 	};
 
 	const handleOpen = async (): Promise<void> => {
 		try {
-			await dispatch(createOrder(ingredientsIds)).unwrap();
-			dispatch(clearIngredientsInConstructor());
+			await dispatch(createOrder(ingredientsIds))
+				.unwrap()
+				.then(() => {
+					dispatch(clearIngredientsInConstructor());
+				});
+
 			setIsOpen();
 		} catch (error) {
 			console.error(error);
@@ -77,6 +90,7 @@ export const BurgerConstructor = ({
 					size="medium"
 					extraClass={isLoading ? styles.gradient_animate : ''}
 					onClick={handleClick}
+					disabled={ingredients.length == 0}
 				>
 					{isLoading ? 'Оформляем...' : 'Оформить заказ'}
 				</Button>
