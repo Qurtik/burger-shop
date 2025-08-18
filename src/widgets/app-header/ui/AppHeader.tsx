@@ -1,9 +1,11 @@
+/* eslint-disable prettier/prettier */
 import {
 	BurgerIcon,
 	ListIcon,
 	Logo,
 	ProfileIcon,
 } from '@krgaa/react-developer-burger-ui-components';
+import { Link, NavLink } from 'react-router-dom';
 
 import styles from './app-header.module.css';
 
@@ -12,23 +14,39 @@ export const AppHeader = (): React.JSX.Element => {
 		<header className={styles.header}>
 			<nav className={`${styles.menu} p-4`}>
 				<div className={styles.menu_part_left}>
-					{/* Тут должны быть ссылки, а не например кнопки или абзацы */}
-					<a href="/" className={`${styles.link} ${styles.link_active}`}>
+					<NavLink
+						to="/"
+						className={({ isActive }) =>
+							`${styles.link} ${isActive ? styles.link_active : ''}`
+						}
+					>
 						<BurgerIcon type="primary" />
 						<p className="text text_type_main-default ml-2">Конструктор</p>
-					</a>
-					<a href="/feed" className={`${styles.link} ml-10`}>
+					</NavLink>
+					<NavLink
+						to="/feed"
+						className={({ isActive }) =>
+							`${styles.link} ${isActive ? styles.link_active : ''} ml-10`
+						}
+					>
 						<ListIcon type="secondary" />
 						<p className="text text_type_main-default ml-2">Лента заказов</p>
-					</a>
+					</NavLink>
 				</div>
-				<div className={styles.logo}>
-					<Logo />
-				</div>
-				<a href="/profile" className={`${styles.link} ${styles.link_position_last}`}>
+				<Link to="/">
+					<div className={styles.logo}>
+						<Logo />
+					</div>
+				</Link>
+				<NavLink
+					to="/profile"
+					className={({ isActive }) =>
+						`${styles.link} ${styles.link_position_last} ${isActive ? styles.link_active : ''}`
+					}
+				>
 					<ProfileIcon type="secondary" />
 					<p className="text text_type_main-default ml-2">Личный кабинет</p>
-				</a>
+				</NavLink>
 			</nav>
 		</header>
 	);

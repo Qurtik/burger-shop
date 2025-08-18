@@ -1,0 +1,36 @@
+.page {
+	position: relative;
+	top: 25vh;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 60px;
+}
+
+.menu {
+	width: 320px;
+}
+
+.menu_item {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	height: 65px;
+	color: rgb(161 161 238);
+	cursor: pointer;
+	opacity: 0.6;
+}
+
+.menu_item_active {
+	color: white;
+	opacity: 1;
+}
+
+.menu_footer {
+	color: rgb(108 108 153);
+	opacity: 0.6;
+}
+
+.main {
+	min-width: 500px;
+}
