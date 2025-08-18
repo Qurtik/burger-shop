@@ -12,12 +12,13 @@ type Props = { item: TIngredient };
 
 import { selectIngredientsCount } from '@/services/ingredients/reducers';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import style from './ingredient-item.module.css';
 
 const IngredientItem = ({ item }: Props): React.JSX.Element => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const ingredientsCount = useSelector(selectIngredientsCount);
 	const count = ingredientsCount[item._id] || 0;
 
@@ -27,7 +28,7 @@ const IngredientItem = ({ item }: Props): React.JSX.Element => {
 	});
 
 	const handleOpen = (): void => {
-		void navigate(`ingredientModal/${item._id}`);
+		void navigate(`ingredient/${item._id}`, { state: { background: location } });
 	};
 
 	return (

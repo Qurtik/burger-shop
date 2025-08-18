@@ -9,6 +9,7 @@ import { configureStore } from './services/store';
 import { App } from '@components/app/app';
 
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 
 // const preloadedState = {
 // 	todos: [],
@@ -20,7 +21,9 @@ createRoot(document.getElementById('root')!).render(
 	// <StrictMode>
 	<Provider store={store}>
 		<DndProvider backend={HTML5Backend}>
-			<App />
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
 		</DndProvider>
 	</Provider>
 	// </StrictMode>

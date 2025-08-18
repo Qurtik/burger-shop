@@ -34,15 +34,11 @@ const initialState: State = {
 // FIXME: Проверить
 export const getIngredientById =
 	(id: string): AppThunk<Promise<TIngredient | undefined | null>> =>
-	async (dispatch, getState) => {
+	async (_, getState) => {
 		const ingredientSelector = selectIngredientById(id);
 		const ingredient = ingredientSelector(getState());
 
 		if (ingredient) return ingredient;
-
-		await dispatch(loadIngredients());
-
-		return ingredientSelector(getState()) ?? null;
 	};
 
 export const ingredientsSlice = createSlice({
@@ -120,7 +116,7 @@ export const ingredientsSlice = createSlice({
 	selectors: {
 		selectIngredientsState: (state) => state,
 		selectIngredients: (state) => state.ingredients,
-		selectIngredientById: (state) => state.ingredients,
+		selectIngredientById: (state, payload) => state.ingredients?.find(ingredient => ingredient._id === payload),
 		selectIngredientsInConstructor: (state) => state.ingredientsInContructor,
 		selectIsLoading: (state) => state.isLoading,
 		selectIsError: (state) => state.isError,
