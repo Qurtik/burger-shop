@@ -1,22 +1,18 @@
 /* eslint-disable prettier/prettier */
 
-import { loadIngredients } from '@/services/ingredients/actions';
 import {
 	selectIngredients,
 	selectIngredientsInConstructor,
 	selectIsError,
 	selectIsLoading,
 } from '@/services/ingredients/reducers';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-	Outlet,
-} from 'react-router-dom';
+	useSelector,
+} from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-
-import type { AppDispatch } from '@/services/store';
 
 import styles from './app.module.css';
 
@@ -27,12 +23,6 @@ export const BurgerConstructorPage = (): React.JSX.Element => {
 	const isError = useSelector(selectIsError);
 
 	const ingredientsInContructor = useSelector(selectIngredientsInConstructor);
-
-	const dispatch = useDispatch<AppDispatch>();
-
-	useEffect(() => {
-		void dispatch(loadIngredients());
-	}, [dispatch]);
 
 	return (
 		<div className={styles.app}>

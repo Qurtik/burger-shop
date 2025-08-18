@@ -29,7 +29,7 @@ class Http {
 	}
 
 	public async post<T>(url: string, data: object, params?: RequestInit): Promise<T> {
-		const body = JSON.stringify(data);
+		const body = data instanceof FormData ? data : JSON.stringify(data);
 
 		const response = await this.baseRequest<T>(url, {
 			...params,
@@ -41,7 +41,7 @@ class Http {
 	}
 
 	public async patch<T>(url: string, data: object, params?: RequestInit): Promise<T> {
-		const body = JSON.stringify(data);
+		const body = data instanceof FormData ? data : JSON.stringify(data);
 
 		return await this.baseRequest<T>(url, {
 			...params,
@@ -52,26 +52,30 @@ class Http {
 
 	private async baseRequest<T>(url: string, options: RequestInit = {}): Promise<T> {
 		const accessToken = this.getAccessToken();
+		const headers = new Headers(options.headers);
+		// const headers: HeadersInit = {
+		// 	'Content-Type': 'application/json',
+		// 	cors: 'cors',
+		// 	...(options.headers || {}),
+		// };
+
+		if (
+			!headers.has('Content-Type') &&
+			options.body &&
+			!(options.body instanceof FormData)
+		) {
+			headers.set('Content-Type', 'application/json');
+		}
 
 		if (accessToken) {
-			options = {
-				...options,
-				headers: {
-					...options.headers,
-					authorization: `Bearer ${accessToken}`,
-				},
-			};
+			headers.set('authorization', `Bearer ${accessToken}`);
 		}
 
 		const response = await fetch(`${this.baseUrl}${url}`, {
-			method: options?.method,
-			headers: {
-				'Content-Type': 'application/json',
-				cors: 'cors',
-				...options?.headers,
-			},
-			body: options?.body,
 			...options,
+			method: options?.method,
+			headers,
+			body: options?.body,
 		});
 
 		return this.checkResponse<T>(response);
