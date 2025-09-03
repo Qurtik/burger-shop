@@ -1,32 +1,40 @@
-import { loadIngredients } from '@/services/ingredients/actions';
-import {
-	selectIngredients,
-	selectIngredientsInConstructor,
-	// selectIngredientsState,
-	selectIsError,
-	selectIsLoading,
-} from '@/services/ingredients/reducers';
+import BurgerConstructorPage from '@/pages/constructor';
+import ForgotPasswordPage from '@/pages/forgot-password';
+import IngredientPage from '@/pages/ingredient';
+import LoginPage from '@/pages/login';
+import ProfilePage from '@/pages/profile';
+import RegisterPage from '@/pages/register';
+import ResetPasswordPage from '@/pages/reset-password';
+import { checkUserAuth } from '@/services/auth/actions';
+import AppHeader from '@/widgets/app-header';
+import IngredientDetailsModal from '@/widgets/ingredient-details';
+import { OrdersHistory, Profile } from '@/widgets/Profile';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { AppHeader } from '@components/app-header/app-header';
-import { BurgerConstructor } from '@components/burger-contructor/burger-constructor';
-import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
+import { useDispatch } from 'react-redux';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 import type { AppDispatch } from '@/services/store';
+import { loadIngredients } from '@/services/ingredients/actions';
+import { OnlyAuth, OnlyNoAuth } from './router';
 
-import styles from './app.module.css';
+const Layout = (): React.JSX.Element => {
+	return (
+		<>
+			<AppHeader />
+			<Outlet />
+		</>
+	);
+};
 
 export const App = (): React.JSX.Element => {
-	// const { ingredients, isLoading, isError } = useSelector(selectIngredientsState);
-	// FIXME: Почему происходит перерсовка элементов компонента?
-	const ingredients = useSelector(selectIngredients);
-	const isLoading = useSelector(selectIsLoading);
-	const isError = useSelector(selectIsError);
-
-	const ingredientsInContructor = useSelector(selectIngredientsInConstructor);
-
 	const dispatch = useDispatch<AppDispatch>();
+
+	const location = useLocation();
+	const backgroundLocation: Location = location.state?.background;
+
+	useEffect(() => {
+		dispatch(checkUserAuth());
+	}, []);
 
 	useEffect(() => {
 		void dispatch(loadIngredients());
@@ -34,28 +42,39 @@ export const App = (): React.JSX.Element => {
 
 	return (
 		<>
-			<div className={styles.app}>
-				<AppHeader />
-				<h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
-					Соберите бургер
-				</h1>
-				<main className={`${styles.main} pl-5 pr-5`}>
-					{isLoading ? (
-						<p>Loading...</p>
-					) : isError ? (
-						<p>Error</p>
-					) : !ingredients?.length ? (
-						<p>Нет доступных ингредиентов</p>
-					) : (
-						<>
-							<BurgerIngredients ingredients={ingredients} />
-							<BurgerConstructor ingredients={ingredientsInContructor} />
-						</>
-					)}
-				</main>
-			</div>
+			{backgroundLocation && (
+				<Routes>
+					<Route path="/ingredient/:id" element={<IngredientDetailsModal />} />
+				</Routes>
+			)}
+
+			<Routes location={backgroundLocation || location}>
+				<Route path="/" element={<Layout />}>
+					<Route index element={<BurgerConstructorPage />} />
+
+					<Route path="/profile" element={<OnlyAuth element={<ProfilePage />} />}>
+						<Route path="" element={<Profile />} />
+						<Route path="orders" element={<OrdersHistory />} />
+					</Route>
+					<Route path="/feed" element={<div>Feed</div>} />
+					<Route path="/ingredient/:id" element={<IngredientPage />} />
+				</Route>
+
+				{/* No Layout */}
+				<Route path="/login" element={<OnlyNoAuth element={<LoginPage />} />} />
+				<Route
+					path="/register"
+					element={<OnlyNoAuth element={<RegisterPage />} />}
+				/>
+				<Route
+					path="/forgot-password"
+					element={<OnlyNoAuth element={<ForgotPasswordPage />} />}
+				/>
+				<Route
+					path="/reset-password"
+					element={<OnlyNoAuth element={<ResetPasswordPage />} />}
+				/>
+			</Routes>
 		</>
 	);
 };
-
-export default App;

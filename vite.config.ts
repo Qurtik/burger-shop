@@ -7,33 +7,35 @@ import sassDts from 'vite-plugin-sass-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    checker({
-      typescript: true,
-    }),
-    react(),
-    readableClassnames(),
-    sassDts({
-      enabledMode: ['development'],
-      esmExport: true,
-    }),
-  ],
-  base: '',
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@services': path.resolve(__dirname, './src/utils'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-    },
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./vitest-setup.ts'],
-  },
-  server: {
-    open: true,
-  },
+	plugins: [
+		checker({
+			typescript: true,
+		}),
+		react(),
+		readableClassnames(),
+		sassDts({
+			enabledMode: ['development'],
+			esmExport: true,
+		}),
+	],
+	base: '',
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+			'@components': path.resolve(__dirname, './src/components'),
+			'@services': path.resolve(__dirname, './src/utils'),
+			'@pages': path.resolve(__dirname, './src/pages'),
+			'@utils': path.resolve(__dirname, './src/utils'),
+			'@widgets': path.resolve(__dirname, './src/widgets'),
+			'@shared': path.resolve(__dirname, './src/shared'),
+		},
+	},
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		setupFiles: ['./vitest-setup.ts'],
+	},
+	server: {
+		open: true,
+	},
 });
