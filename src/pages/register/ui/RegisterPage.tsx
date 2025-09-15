@@ -10,13 +10,13 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import type { AppDispatch } from '@/services/store';
 import type { FormEvent, JSX } from 'react';
 
 import styles from './register-page.module.css';
+import { useDispatch } from '@/services/hooks';
 
 type TForm = {
 	username: string;
@@ -25,7 +25,7 @@ type TForm = {
 };
 
 export const RegisterPage = (): JSX.Element => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 	const errorText = useSelector(selectErrorText);
 	const isLoading = useSelector(selectIsLoading);
 	const navigate = useNavigate();

@@ -8,18 +8,18 @@ import { selectOrderState } from '@/services/order/reducers';
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import Modal from '@shared/ui/modal/modal';
 import { useModal } from '@shared/ui/modal/useModal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import ContructorWidget from './constructor-widget/constructor-widget';
 import OrderDetails from './order-details/order-details';
 
-import type { AppDispatch } from '@/services/store';
 import type { TIngredient } from '@utils/types';
 import type React from 'react';
 
 import styles from './burger-constructor.module.css';
 import { selectUser } from '@/services/auth/reducers';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from '@/services/hooks';
 
 type TBurgerConstructorProps = {
 	ingredients: TIngredient[];
@@ -44,7 +44,7 @@ export const BurgerConstructor = ({
 		// , isError
 		isLoading,
 	} = useSelector(selectOrderState);
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 
 	const handleClick = (): void => {
 		if (!currentUser) {

@@ -6,11 +6,11 @@ import {
 } from '@krgaa/react-developer-burger-ui-components';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 
 import type { TIngredientConstructor } from '@/services/ingredients/reducers';
 
 import styles from './constructor-item.module.css';
+import { useDispatch } from '@/services/hooks';
 
 type TProps = {
 	ingredient: TIngredientConstructor;

@@ -8,12 +8,11 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { FormEvent, useState, type JSX } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import type { AppDispatch } from '@/services/store';
-
 import styles from './login-page.module.css';
+import { useDispatch } from '@/services/hooks';
 
 type TForm = {
 	email: string;
@@ -21,7 +20,7 @@ type TForm = {
 };
 
 export const LoginPage = (): JSX.Element => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const errorText = useSelector(selectErrorText);
 	const isLoading = useSelector(selectIsLoading);

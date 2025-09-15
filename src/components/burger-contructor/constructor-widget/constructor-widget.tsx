@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ConstructorElement } from '@krgaa/react-developer-burger-ui-components';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 
 import { addIngredient, changeBun } from '../../../services/ingredients/reducers';
 import ContructorItem from './constructor-item/constructor-item';
@@ -11,6 +10,7 @@ import ContructorItem from './constructor-item/constructor-item';
 import type { TIngredientConstructor } from '../../../services/ingredients/reducers';
 
 import styles from './constructor-widget.module.css';
+import { useDispatch } from '@/services/hooks';
 
 type ContructorWidgetProps = {
 	ingredients: TIngredientConstructor[];

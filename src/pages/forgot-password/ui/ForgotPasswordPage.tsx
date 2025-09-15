@@ -3,19 +3,17 @@ import { resetPassword } from '@/services/auth/actions';
 import { Card } from '@/shared/ui';
 import { Button, Input } from '@krgaa/react-developer-burger-ui-components';
 import { FormEvent, useState, type JSX } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import type { AppDispatch } from '@/services/store';
-
 import styles from './forgot-password-page.module.css';
+import { useDispatch } from '@/services/hooks';
 
 type TForm = {
 	email: string;
 };
 
 export const ForgotPasswordPage = (): JSX.Element => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [form, setForm] = useState<TForm>({
