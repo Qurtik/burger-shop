@@ -15,6 +15,7 @@ import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { loadIngredients } from '@/services/ingredients/actions';
 import { OnlyAuth, OnlyNoAuth } from './router';
 import { useDispatch } from '@/services/hooks';
+import { FeedPage } from '@/pages/feed';
 
 const Layout = (): React.JSX.Element => {
 	return (
@@ -55,7 +56,7 @@ export const App = (): React.JSX.Element => {
 						<Route path="" element={<Profile />} />
 						<Route path="orders" element={<OrdersHistory />} />
 					</Route>
-					<Route path="/feed" element={<div>Feed</div>} />
+					<Route path="/feed" element={<FeedPage/>} />
 					<Route path="/ingredient/:id" element={<IngredientPage />} />
 				</Route>
 

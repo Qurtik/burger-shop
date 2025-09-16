@@ -1,0 +1,19 @@
+.page {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+.main {
+	display: flex;
+	justify-content: center;
+	gap: 60px;
+}
+
+.orders {
+	max-height: 90vh;
+	overflow: auto;
+}

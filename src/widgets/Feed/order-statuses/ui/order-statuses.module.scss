@@ -1,0 +1,39 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	width: 580px;
+}
+
+.statuses {
+	display: flex;
+	width: 100%;
+	gap: 36px;
+}
+
+.statuses__label {
+	margin-bottom: 24px;
+}
+
+.statuses__done {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	color: #00CCCC;
+	width: 206px;
+	flex-direction: column;
+	max-height: 153px;
+}
+
+.statuses__in_progress {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	width: 206px;
+	flex-direction: column;
+	max-height: 153px;
+}
+
+.total {
+	text-shadow: 0 4px 32px #3333FF;
+}
