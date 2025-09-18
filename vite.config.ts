@@ -36,6 +36,6 @@ export default defineConfig({
 		setupFiles: ['./vitest-setup.ts'],
 	},
 	server: {
-		open: true,
+		// open: true,
 	},
 });

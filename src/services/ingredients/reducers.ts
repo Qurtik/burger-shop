@@ -34,6 +34,7 @@ const initialState: State = {
 // FIXME: Проверить
 export const getIngredientById =
 	(id: string): AppThunk<Promise<TIngredient | undefined | null>> =>
+		// @ts-ignore
 	async (_, getState) => {
 		const ingredientSelector = selectIngredientById(id);
 		const ingredient = ingredientSelector(getState());
