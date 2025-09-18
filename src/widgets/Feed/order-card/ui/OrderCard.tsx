@@ -1,5 +1,4 @@
 import styles from './order-card.module.scss';
-// import type { TIngredient } from '@/utils/types';
 import {
 	CurrencyIcon,
 	FormattedDate,
@@ -7,6 +6,8 @@ import {
 import { TIngredient } from '@/utils/types';
 import { useMemo } from 'react';
 import { TOrder } from '@/services/feed/actions';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { statuses, statusesColor } from '@/components/order-details';
 
 type TIngredientImagesProps = {
 	ingredients: TIngredient[];
@@ -61,19 +62,9 @@ type TOrderProps = {
 	order: TOrder & { ingredientsDetailed: TIngredient[] };
 };
 
-const statuses = {
-	done: 'Выполнен',
-	pending: 'Готовится',
-	cancelled: 'Отменен',
-};
-
-const statusesColor = {
-	done: '#00CCCC',
-	pending: 'white',
-	cancelled: 'red',
-};
-
 export const OrderCard = ({ order, showStatus = false }: TOrderProps) => {
+	const navigate = useNavigate();
+	const location = useLocation();
 	const totalPrice = useMemo(
 		() => order.ingredientsDetailed.reduce((acc, item) => acc + item.price, 0),
 		[order]
@@ -81,9 +72,16 @@ export const OrderCard = ({ order, showStatus = false }: TOrderProps) => {
 
 	const createdAtDate = new Date(order.createdAt);
 
+	const handleClick = (): void => {
+		const currentPathname = location.pathname;
+		void navigate(`${currentPathname}/${order._id}`, {
+			state: { background: location },
+		});
+	};
+
 	return (
 		<>
-			<div className={styles.card}>
+			<div className={styles.card} onClick={handleClick}>
 				<div className={styles.title}>
 					<span className="text text_type_digits-default">#{order.number}</span>
 					<span className={`text text_color_inactive ${styles.title_timestamp}`}>
