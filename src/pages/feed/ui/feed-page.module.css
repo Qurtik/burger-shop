@@ -7,6 +7,20 @@
 	box-sizing: border-box;
 }
 
+.card_preload {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 584px;
+  height: 250px;
+	padding: 24px;
+	margin: 24px;
+	border-radius: 40px;
+	box-sizing: border-box;
+	background-color: #1c1c21;
+}
+
 .main {
 	display: flex;
 	justify-content: center;

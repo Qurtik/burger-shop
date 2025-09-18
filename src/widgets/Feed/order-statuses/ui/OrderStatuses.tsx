@@ -1,6 +1,19 @@
+import { TFeedOrder } from '@/services/feed/actions';
 import styles from './order-statuses.module.scss';
 
-export const OrderStatuses = () => {
+type TOrderStatusesProps = {
+	ordersDone: number[];
+	ordersPending: number[];
+	total: TFeedOrder['total'];
+	totalToday: TFeedOrder['totalToday'];
+};
+
+export const OrderStatuses = ({
+	total,
+	totalToday,
+	ordersDone,
+	ordersPending,
+}: TOrderStatusesProps) => {
 	return (
 		<div className={styles.page}>
 			<div className={styles.statuses}>
@@ -9,15 +22,9 @@ export const OrderStatuses = () => {
 						Готовы:
 					</p>
 					<div className={`text text_type_digits-default ${styles.statuses__done}`}>
-						<span>034533</span>
-						<span>034532</span>
-						<span>034530</span>
-						<span>034527</span>
-						<span>034525</span>
-						<span>034532</span>
-						<span>034530</span>
-						<span>034527</span>
-						<span>034525</span>
+						{ordersDone.map((number) => {
+							return <span key={`done-${number}`}>{number}</span>;
+						})}
 					</div>
 				</div>
 				<div>
@@ -27,19 +34,19 @@ export const OrderStatuses = () => {
 					<div
 						className={`text text_type_digits-default ${styles.statuses__in_progress}`}
 					>
-						<span>034538</span>
-						<span>034541</span>
-						<span>034542</span>
+						{ordersPending.map((number) => {
+							return <span key={`pending-${number}`}>{number}</span>;
+						})}
 					</div>
 				</div>
 			</div>
 			<div className="text text_type_main-large">
 				Выполнено за все время:
-				<p className={`text text_type_digits-large ${styles.total}`}>28 752</p>
+				<p className={`text text_type_digits-large ${styles.total}`}>{total}</p>
 			</div>
 			<div className="text text_type_main-large">
 				Выполнено за сегодня:
-				<p className={`text text_type_digits-large ${styles.total}`}>138</p>
+				<p className={`text text_type_digits-large ${styles.total}`}>{totalToday}</p>
 			</div>
 		</div>
 	);

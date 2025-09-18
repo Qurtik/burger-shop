@@ -1,10 +1,10 @@
 declare const classNames: {
   readonly card: "card";
   readonly title: "title";
-  readonly title__timestamp: "title__timestamp";
+  readonly title_timestamp: "title_timestamp";
   readonly ingredients_container: "ingredients_container";
   readonly ingredient_image: "ingredient_image";
-  readonly last_ingredient_container: "last_ingredient_container";
-  readonly ingredient_overlay: "ingredient_overlay";
+  readonly overflow_indicator: "overflow_indicator";
+  readonly overflow_indicator_overlay: "overflow_indicator_overlay";
 };
 export default classNames;
