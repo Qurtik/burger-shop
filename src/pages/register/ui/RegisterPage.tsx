@@ -10,13 +10,12 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { useState } from 'react';
-import {  useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import type { FormEvent, JSX } from 'react';
 
 import styles from './register-page.module.css';
-import { useDispatch } from '@/services/hooks';
+import { useDispatch, useSelector } from '@/services/hooks';
 
 type TForm = {
 	username: string;

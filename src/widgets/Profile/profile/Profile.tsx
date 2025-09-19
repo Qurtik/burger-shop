@@ -9,11 +9,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import type { FormEvent, JSX } from 'react';
-import {  useSelector } from 'react-redux';
 
 import styles from './profile.module.css';
 import { changeUserData } from '@/services/auth/actions';
-import { useDispatch } from '@/services/hooks';
+import { useDispatch, useSelector } from '@/services/hooks';
 
 type TForm = {
 	username: string;

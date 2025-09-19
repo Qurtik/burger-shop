@@ -3,10 +3,10 @@
 import IngredientDetails from '@/components/burger-ingredients/ingredients-widget/ingredients-detailts/ingredient-details';
 import { selectIngredientById } from '@/services/ingredients/reducers';
 import { Modal } from '@shared/ui';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import type React from 'react';
+import { useSelector } from '@/services/hooks';
 
 const IngredientDetailsModal = (): React.JSX.Element | null => {
 	const { id } = useParams();

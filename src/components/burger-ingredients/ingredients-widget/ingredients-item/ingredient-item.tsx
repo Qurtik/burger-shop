@@ -11,10 +11,10 @@ import type React from 'react';
 type Props = { item: TIngredient };
 
 import { selectIngredientsCount } from '@/services/ingredients/reducers';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import style from './ingredient-item.module.css';
+import { useSelector } from '@/services/hooks';
 
 const IngredientItem = ({ item }: Props): React.JSX.Element => {
 	const navigate = useNavigate();

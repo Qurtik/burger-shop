@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
 	clearIngredientsInConstructor,
 	selectIngredientsInConstructor,
@@ -8,7 +7,6 @@ import { selectOrderState } from '@/services/order/reducers';
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import Modal from '@shared/ui/modal/modal';
 import { useModal } from '@shared/ui/modal/useModal';
-import { useSelector } from 'react-redux';
 
 import ContructorWidget from './constructor-widget/constructor-widget';
 import OrderDetails from './order-details/order-details';
@@ -19,7 +17,7 @@ import type React from 'react';
 import styles from './burger-constructor.module.css';
 import { selectUser } from '@/services/auth/reducers';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from '@/services/hooks';
+import { useDispatch, useSelector } from '@/services/hooks';
 
 type TBurgerConstructorProps = {
 	ingredients: TIngredient[];

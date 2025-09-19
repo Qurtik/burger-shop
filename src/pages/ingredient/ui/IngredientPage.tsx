@@ -6,9 +6,9 @@ import {
 	selectIsError,
 	selectIsLoading,
 } from '@/services/ingredients/reducers';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './ingredient-page.module.css';
+import { useSelector } from '@/services/hooks';
 
 // FIXME: Проверить почему появляется "Данные отсутствуют"
 export const IngredientPage = (): React.JSX.Element => {

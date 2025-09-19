@@ -8,11 +8,10 @@ import {
 	PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
 import { FormEvent, useState, type JSX } from 'react';
-import {  useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './login-page.module.css';
-import { useDispatch } from '@/services/hooks';
+import { useDispatch, useSelector } from '@/services/hooks';
 
 type TForm = {
 	email: string;
