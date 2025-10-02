@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 24px;
+}
+
+.img {
+  --image-size: 64px;
+  object-fit: cover;
+  border-radius: 50px;
+  width: var(--image-size);
+  height: var(--image-size);
+  border: 2px solid #801ab2;
+}
+
+.count_and_price {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,5 +1,5 @@
 import { selectIsAuthChecked, selectUser } from '@/services/auth/reducers';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 
 const Protected = ({

@@ -10,12 +10,14 @@ import AppHeader from '@/widgets/app-header';
 import IngredientDetailsModal from '@/widgets/ingredient-details';
 import { OrdersHistory, Profile } from '@/widgets/Profile';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
-import type { AppDispatch } from '@/services/store';
 import { loadIngredients } from '@/services/ingredients/actions';
 import { OnlyAuth, OnlyNoAuth } from './router';
+import { useDispatch } from '@/services/hooks';
+import { FeedPage } from '@/pages/feed';
+import { OrderDetailsModal } from '@/widgets/Feed/order-details';
+import { OrderDetailsPage } from '@/pages/order';
 
 const Layout = (): React.JSX.Element => {
 	return (
@@ -27,7 +29,7 @@ const Layout = (): React.JSX.Element => {
 };
 
 export const App = (): React.JSX.Element => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 
 	const location = useLocation();
 	const backgroundLocation: Location = location.state?.background;
@@ -45,6 +47,8 @@ export const App = (): React.JSX.Element => {
 			{backgroundLocation && (
 				<Routes>
 					<Route path="/ingredient/:id" element={<IngredientDetailsModal />} />
+					<Route path="/feed/:id" element={<OrderDetailsModal />} />
+					<Route path="/profile/orders/:id" element={<OrderDetailsModal />} />
 				</Routes>
 			)}
 
@@ -56,7 +60,9 @@ export const App = (): React.JSX.Element => {
 						<Route path="" element={<Profile />} />
 						<Route path="orders" element={<OrdersHistory />} />
 					</Route>
-					<Route path="/feed" element={<div>Feed</div>} />
+					<Route path="/feed" element={<FeedPage />} />
+					<Route path="/feed/:id" element={<OrderDetailsPage />} />
+					<Route path="/profile/orders/:id" element={<OrderDetailsPage />} />
 					<Route path="/ingredient/:id" element={<IngredientPage />} />
 				</Route>
 

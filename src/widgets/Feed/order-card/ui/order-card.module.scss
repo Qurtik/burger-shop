@@ -1,0 +1,69 @@
+.card {
+	--bg-color: #1c1c21;
+	--border-color: #801ab2;
+	--image-size: 64px;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 584px;
+	padding: 24px;
+	margin: 24px;
+	border-radius: 40px;
+	box-sizing: border-box;
+	background-color: var(--bg-color);
+
+  cursor: pointer;
+}
+
+.title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title_timestamp {
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.ingredients_container {
+	position: relative;
+	display: flex;
+	width: 100%;
+  min-height: 60px;
+	height: 100%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredient_image {
+	position: absolute;
+	width: var(--image-size);
+	height: var(--image-size);
+	top: 0;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid var(--border-color);
+	background-color: var(--bg-color);
+}
+
+.overflow_indicator {
+	position: absolute;
+	width: var(--image-size);
+	height: var(--image-size);
+	top: 0;
+}
+
+.overflow_indicator_overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: rgba(28, 28, 33, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -6,15 +6,13 @@ import {
 	selectIsError,
 	selectIsLoading,
 } from '@/services/ingredients/reducers';
-import {
-	useSelector,
-} from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 
 import styles from './app.module.css';
+import { useSelector } from '@/services/hooks';
 
 export const BurgerConstructorPage = (): React.JSX.Element => {
 	// FIXME: Почему происходит перерсовка элементов компонента?

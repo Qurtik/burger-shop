@@ -85,7 +85,7 @@ class Http {
 		return localStorage.getItem('accessToken') ?? undefined;
 	}
 
-	private async refreshToken(): Promise<void> {
+	public async refreshToken(): Promise<void> {
 		const refreshToken = localStorage.getItem('refreshToken');
 
 		try {

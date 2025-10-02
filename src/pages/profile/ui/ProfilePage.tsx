@@ -5,12 +5,11 @@ import { NavLink, Outlet } from 'react-router-dom';
 import type { JSX } from 'react';
 
 import styles from './profile-page.module.css';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/services/store';
 import { logout } from '@/services/auth/reducers';
+import { useDispatch } from '@/services/hooks';
 
 export const ProfilePage = (): JSX.Element => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 	const handleClick = () => {
 		dispatch(logout());
 	};

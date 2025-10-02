@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { selectUser } from '@/services/auth/reducers';
-import { AppDispatch } from '@/services/store';
 import { Card } from '@/shared/ui';
 import {
 	Button,
@@ -10,10 +9,10 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import type { FormEvent, JSX } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './profile.module.css';
 import { changeUserData } from '@/services/auth/actions';
+import { useDispatch, useSelector } from '@/services/hooks';
 
 type TForm = {
 	username: string;
@@ -23,7 +22,7 @@ type TForm = {
 
 export const Profile = (): JSX.Element => {
 	const user = useSelector(selectUser);
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const loginRef = useRef<HTMLInputElement>(null);
