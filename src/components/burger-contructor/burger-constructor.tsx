@@ -83,6 +83,7 @@ export const BurgerConstructor = ({
 					{totalOrderPrice} <CurrencyIcon type="primary" />
 				</span>
 				<Button
+					data-testid="constructor-make-order-button"
 					htmlType="button"
 					type="primary"
 					size="medium"

@@ -43,6 +43,7 @@ const Modal = ({
 	return ReactDOM.createPortal(
 		<div className="modal-overlay" onClick={onClose}>
 			<div
+				data-testid="modal-content"
 				className={`p-${padding} modal-content text text_type_main-default`}
 				onClick={(e) => e.stopPropagation()}
 			>

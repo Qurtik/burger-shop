@@ -18,7 +18,7 @@ const IngredientWidget = ({ ingredients, itemType }: TItemBlock): React.JSX.Elem
 
 	return (
 		<div className="pt-10">
-			<div className={`${style.widgetItems} pl-4`}>
+			<div className={`${style.widgetItems} pl-4`} data-testid="ingredient-items-list">
 				{items.map((item) => {
 					return (
 						<React.Fragment key={item._id}>

@@ -63,7 +63,7 @@ export const BurgerIngredients = ({
 	return (
 		<section className={styles.burger_ingredients}>
 			<nav>
-				<ul className={styles.menu}>
+				<ul data-testid="menu" className={styles.menu}>
 					<Tab value="bun" active={current === 'bun'} onClick={changeTab}>
 						Булки
 					</Tab>
