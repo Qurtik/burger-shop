@@ -76,15 +76,15 @@ export const BurgerIngredients = ({
 				</ul>
 			</nav>
 			<div className={styles.ingredient_widgets} ref={containerRef}>
-				<div id="bun-section" ref={bunRef}>
+				<div id="bun-section" data-testid="menu-bun" ref={bunRef}>
 					<h2 className="text text_type_main-medium">Булки</h2>
 					<IngredientWidget ingredients={ingredients} itemType="bun" />
 				</div>
-				<div id="main-section" ref={mainRef}>
+				<div id="main-section" data-testid="menu-main" ref={mainRef}>
 					<h2 className="text text_type_main-medium">Начинки</h2>
 					<IngredientWidget ingredients={ingredients} itemType="main" />
 				</div>
-				<div id="sauce-section" ref={sauceRef}>
+				<div id="sauce-section" data-testid="menu-sauce" ref={sauceRef}>
 					<h2 className="text text_type_main-medium">Соусы</h2>
 					<IngredientWidget ingredients={ingredients} itemType="sauce" />
 				</div>

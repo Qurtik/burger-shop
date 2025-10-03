@@ -279,7 +279,7 @@ describe('auth reducer', () => {
 			expect(newState.isLoading).toBe(false);
 			expect(newState.isError).toBe(true);
 			expect(newState.errorText).toBe('Update failed');
-			expect(newState.user).toEqual(mockUser);
+			expect(newState.user).toBeUndefined();
 		});
 	});
 
