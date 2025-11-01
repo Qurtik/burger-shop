@@ -29,11 +29,11 @@ export const BurgerConstructorPage = (): React.JSX.Element => {
 			</h1>
 			<main className={`${styles.main} pl-5 pr-5`}>
 				{isLoading ? (
-					<p>Loading...</p>
+					<p data-testid="loading">Loading...</p>
 				) : isError ? (
 					<p>Error</p>
 				) : !ingredients?.length ? (
-					<p>Нет доступных ингредиентов</p>
+					<p data-testid="no-data">Нет доступных ингредиентов</p>
 				) : (
 					<>
 						<BurgerIngredients ingredients={ingredients} />

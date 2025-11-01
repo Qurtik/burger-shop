@@ -36,3 +36,6 @@
 		'@utils': path.resolve(__dirname, './src/utils'),
 	},
 ```
+
+## Ссылка на проект
+ - https://qurtik.nomorepartiessbs.ru/

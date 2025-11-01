@@ -74,6 +74,7 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 			<div
 				ref={dropRefStartBun as any}
 				className={`${styles.start_buns_area} ${isHoverStart ? styles.hover_area_buns : null}`}
+				data-testid="constructor-widget"
 			>
 				<p className="text text_type_main-medium"> Перенесите булку сюда</p>
 			</div>
@@ -84,6 +85,7 @@ const ContructorWidget = ({ ingredients }: ContructorWidgetProps): React.JSX.Ele
 		<div
 			className={`${styles.widget} ${isHover ? styles.hover_area_ingredients : null} mb-12`}
 			ref={dropRef as any}
+			data-testid="constructor-widget"
 		>
 			<div
 				ref={dropRefBunTop as any}

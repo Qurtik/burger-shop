@@ -33,7 +33,7 @@ const IngredientItem = ({ item }: Props): React.JSX.Element => {
 
 	return (
 		<>
-			<div ref={dragRef as any} className={`${style.card}`} onClick={handleOpen}>
+			<div ref={dragRef as any} className={`${style.card}`} onClick={handleOpen} data-testid="ingredient-item">
 				<img
 					className={`${style.card_image} ml-4 mr-4`}
 					alt="Наименование булки"

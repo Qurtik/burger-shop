@@ -21,13 +21,13 @@ export const IngredientPage = (): React.JSX.Element => {
 		<>
 			<div className={styles.page}>
 				{isLoading ? (
-					<p>Loading...</p>
+					<p data-testid="loading">Loading...</p>
 				) : isError ? (
-					<p>Ошибка загрузки ингридиента</p>
+					<p data-testid="error">Ошибка загрузки ингридиента</p>
 				) : ingredient ? (
 					<IngredientDetails currentIngredient={ingredient} />
 				) : (
-					<p>Данные отсутствуют</p>
+					<p data-testid="no-data">Данные отсутствуют</p>
 				)}
 			</div>
 		</>
